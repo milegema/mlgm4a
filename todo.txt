@@ -3,9 +3,9 @@ logger  .............. [OK]
 web-client ........... [OK]
 properties ........... [OK]
 tasks(promise) ....... [OK]
-repo-files-access
-repo-layout
+security-sum ......... [OK]
 security-sk
 security-pk
-security-sum
 
+repo-files-access
+repo-layout

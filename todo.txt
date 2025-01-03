@@ -2,7 +2,7 @@
 logger  .............. [OK]
 web-client ........... [OK]
 properties ........... [OK]
-tasks(promise) ... []
+tasks(promise) ....... [OK]
 repo-files-access
 repo-layout
 security-sk

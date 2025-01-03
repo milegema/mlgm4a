@@ -1,25 +1,22 @@
-package com.github.milegema.mlgm4a.security;
+package com.github.milegema.mlgm4a.security.hash;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.milegema.mlgm4a.utils.Hex;
 
-/**
- * SHA256SUM 是一个 256 位的哈希值
- */
-public final class SHA256SUM {
+public class Sum256 implements Sum {
 
     private final long n0, n1, n2, n3;
 
-    public SHA256SUM() {
+    public  Sum256 () {
         this.n0 = 0;
         this.n1 = 0;
         this.n2 = 0;
         this.n3 = 0;
     }
 
-    public SHA256SUM(String str) {
+    public  Sum256 (String str) {
         Builder b = new Builder();
         b.init(str);
         this.n0 = b.n0;
@@ -28,7 +25,7 @@ public final class SHA256SUM {
         this.n3 = b.n3;
     }
 
-    public SHA256SUM(byte[] bin) {
+    public  Sum256 (byte[] bin) {
         Builder b = new Builder();
         b.init(bin);
         this.n0 = b.n0;
@@ -37,7 +34,7 @@ public final class SHA256SUM {
         this.n3 = b.n3;
     }
 
-    private SHA256SUM(Builder b) {
+    private  Sum256 (Builder b) {
         this.n0 = b.n0;
         this.n1 = b.n1;
         this.n2 = b.n2;
@@ -120,8 +117,8 @@ public final class SHA256SUM {
         if (o2 == null) {
             return false;
         }
-        if (o2 instanceof SHA256SUM) {
-            final SHA256SUM other = (SHA256SUM) o2;
+        if (o2 instanceof Sum256 ) {
+            final Sum256 other = (Sum256) o2;
             boolean b0 = (this.n0 == other.n0);
             boolean b1 = (this.n1 == other.n1);
             boolean b2 = (this.n2 == other.n2);

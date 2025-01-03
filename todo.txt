@@ -1,11 +1,11 @@
 
 logger  .............. [OK]
 web-client ........... [OK]
-properties .... []
+properties ........... [OK]
+tasks(promise) ... []
 repo-files-access
 repo-layout
 security-sk
 security-pk
 security-sum
-tasks(promise)
 

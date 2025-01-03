@@ -5,7 +5,7 @@ properties ........... [OK]
 tasks(promise) ....... [OK]
 security-sum ......... [OK]
 security-sk
-security-pk
+security-pk .......... [OK]
 
 repo-files-access
 repo-layout

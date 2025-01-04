@@ -45,6 +45,7 @@ public class SecretKeyManagerTest {
 
         SecretKey sk = holder.fetch();
 
+        // cipher
         SimpleCipher ci = new SimpleCipher();
         ci.setAlgorithm(sk.getAlgorithm());
         ci.setPadding(CipherPadding.PKCS5Padding);
@@ -59,6 +60,9 @@ public class SecretKeyManagerTest {
         Logs.debug("data1 = " + Arrays.toString(data1.toByteArray()));
         Logs.debug("data3 = " + Arrays.toString(data3.toByteArray()));
         Logs.debug("data2 = " + Arrays.toString(data2.toByteArray()));
+
+        Logs.debug("data1.len = " + data1.getLength());
+        Logs.debug("data2.len = " + data2.getLength());
 
         Assert.assertArrayEquals(data1.toByteArray(), data3.toByteArray());
     }

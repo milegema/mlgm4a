@@ -4,8 +4,10 @@ web-client ........... [OK]
 properties ........... [OK]
 tasks(promise) ....... [OK]
 security-sum ......... [OK]
-security-sk
+security-sk .......... [OK]
 security-pk .......... [OK]
+
+pem
 
 repo-files-access
 repo-layout

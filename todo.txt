@@ -6,8 +6,7 @@ tasks(promise) ....... [OK]
 security-sum ......... [OK]
 security-sk .......... [OK]
 security-pk .......... [OK]
-
-pem
+pem .................. [OK]
 
 repo-files-access
 repo-layout

@@ -2,6 +2,7 @@ package com.github.milegema.mlgm4a.data.pem;
 
 
 import com.github.milegema.mlgm4a.utils.Base64;
+import com.github.milegema.mlgm4a.utils.ByteSlice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,9 @@ public final class PEMDecoder {
         void handleBlockEdgeRow(String row) {
             final String _begin = "BEGIN";
             final String _end = "END";
-            String str = row.replace('-', '\t').trim().toUpperCase();
+            String str = row.replace('-', '\t');
+            str = str.trim().toUpperCase();
+            str = str.replace('\t', '-');
             if (str.startsWith(_begin)) {
                 str = str.substring(_begin.length()).trim();
                 this.currentBlockType = str;
@@ -68,7 +71,7 @@ public final class PEMDecoder {
             final byte[] data = Base64.decode(text);
             final PEMBlock block = new PEMBlock();
             block.setType(str);
-            block.setData(data);
+            block.setData(new ByteSlice(data));
             this.list.add(block);
         }
 

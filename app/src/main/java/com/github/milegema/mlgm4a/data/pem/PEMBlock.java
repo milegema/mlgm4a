@@ -1,34 +1,45 @@
 package com.github.milegema.mlgm4a.data.pem;
 
+import com.github.milegema.mlgm4a.utils.ByteSlice;
+
 public class PEMBlock {
 
     private String type;
-    private byte[] data;
+    private ByteSlice data;
 
     public PEMBlock() {
+        this.type = "NONE";
+        this.data = new ByteSlice();
     }
 
-    public byte[] getData() {
-        byte[] res = this.data;
-        if (res == null) {
-            res = new byte[0];
+    private static String normalizeType(String t) {
+        if (t == null) {
+            t = "NONE";
         }
-        return res;
+        return t.trim().toUpperCase();
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    private static ByteSlice normalizeData(ByteSlice src) {
+        if (src == null) {
+            src = new ByteSlice();
+        }
+        return src;
+    }
+
+
+    public ByteSlice getData() {
+        return data;
+    }
+
+    public void setData(ByteSlice _data) {
+        this.data = normalizeData(_data);
     }
 
     public String getType() {
-        String res = this.type;
-        if (res == null) {
-            res = "no type";
-        }
-        return res.toUpperCase();
+        return this.type;
     }
 
     public void setType(String type) {
-        this.type = type;
+        this.type = normalizeType(type);
     }
 }

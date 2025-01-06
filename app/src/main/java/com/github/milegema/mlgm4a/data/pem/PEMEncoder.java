@@ -1,6 +1,7 @@
 package com.github.milegema.mlgm4a.data.pem;
 
 import com.github.milegema.mlgm4a.utils.Base64;
+import com.github.milegema.mlgm4a.utils.ByteSlice;
 
 public final class PEMEncoder {
 
@@ -27,11 +28,11 @@ public final class PEMEncoder {
             return;
         }
 
-        byte[] data = block.getData();
+        ByteSlice data = block.getData();
         String type = block.getType();
-        final char[] b64array = Base64.encode(data).toCharArray();
+        final char[] b64array = Base64.encode(data.toByteArray()).toCharArray();
         final int b64length = b64array.length;
-        final int width = 80;
+        final int width = 64;
         final String bar = "-----";
         final char nl = '\n';
 

@@ -28,11 +28,21 @@ public final class FileAccessFilterChainBuilder {
         public FileAccessResponse access(FileAccessRequest request) throws IOException {
             return this.filter.access(request, this.next);
         }
+
+        @Override
+        public FileAccessFilter getNextFilter() {
+            return this.filter;
+        }
     }
 
     private static class MyEnding implements FileAccessFilterChain {
         @Override
         public FileAccessResponse access(FileAccessRequest request) throws IOException {
+            return null;
+        }
+
+        @Override
+        public FileAccessFilter getNextFilter() {
             return null;
         }
     }
@@ -63,22 +73,31 @@ public final class FileAccessFilterChainBuilder {
             if (a == null || b == null) {
                 return 0;
             }
-            return b.getOrder() - a.getOrder();
+            int o1 = a.getIndex();
+            int o2 = b.getIndex();
+            return o2 - o1;
         });
         return dst;
     }
 
     private static void applyAutoOrder(FileAccessFilterRegistration[] array) {
-        int order_auto = FileAccessFilterOrder.Auto.ordinal();
-        int order_current = FileAccessFilterOrder.Max.ordinal() + 1;
+        int index;
+        int current_index = FileAccessFilterOrder.Max.ordinal() + 1;
         for (FileAccessFilterRegistration item : array) {
+            current_index++;
             if (item == null) {
                 continue;
             }
-            if (item.getOrder() == order_auto) {
-                item.setOrder(order_current);
+            FileAccessFilterOrder order = item.getOrder();
+            if (order == null) {
+                order = FileAccessFilterOrder.Auto;
             }
-            order_current++;
+            if (order == FileAccessFilterOrder.Auto) {
+                index = current_index;
+            } else {
+                index = order.ordinal();
+            }
+            item.setIndex(index);
         }
     }
 

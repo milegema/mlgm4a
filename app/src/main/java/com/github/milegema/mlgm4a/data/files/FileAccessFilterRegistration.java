@@ -4,11 +4,16 @@ public class FileAccessFilterRegistration {
 
     private FileAccessFilter filter;
     private boolean enabled;
-    private int order;
+    private FileAccessFilterOrder order;
+
+    /**
+     * 当 order==auto 时,用于辅助排序
+     */
+    private int index;
 
     public FileAccessFilterRegistration() {
         this.enabled = true;
-        this.order = FileAccessFilterOrder.Auto.ordinal();
+        this.order = FileAccessFilterOrder.Auto;
     }
 
     public FileAccessFilter getFilter() {
@@ -27,11 +32,19 @@ public class FileAccessFilterRegistration {
         this.enabled = enabled;
     }
 
-    public int getOrder() {
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public FileAccessFilterOrder getOrder() {
         return order;
     }
 
-    public void setOrder(int order) {
+    public void setOrder(FileAccessFilterOrder order) {
         this.order = order;
     }
 }

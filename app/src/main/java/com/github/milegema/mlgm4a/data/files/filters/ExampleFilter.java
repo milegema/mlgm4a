@@ -2,6 +2,7 @@ package com.github.milegema.mlgm4a.data.files.filters;
 
 import com.github.milegema.mlgm4a.data.files.FileAccessFilter;
 import com.github.milegema.mlgm4a.data.files.FileAccessFilterChain;
+import com.github.milegema.mlgm4a.data.files.FileAccessFilterOrder;
 import com.github.milegema.mlgm4a.data.files.FileAccessFilterRegistration;
 import com.github.milegema.mlgm4a.data.files.FileAccessFilterRegistry;
 import com.github.milegema.mlgm4a.data.files.FileAccessRequest;
@@ -23,7 +24,7 @@ public class ExampleFilter implements FileAccessFilterRegistry, FileAccessFilter
     @Override
     public FileAccessFilterRegistration registration() {
         FileAccessFilterRegistration re = new FileAccessFilterRegistration();
-        re.setOrder(0);
+        re.setOrder(FileAccessFilterOrder.Auto);
         re.setFilter(this);
         return re;
     }

@@ -6,4 +6,6 @@ public interface FileAccessFilterChain {
 
     FileAccessResponse access(FileAccessRequest request) throws IOException;
 
+    FileAccessFilter getNextFilter();
+
 }

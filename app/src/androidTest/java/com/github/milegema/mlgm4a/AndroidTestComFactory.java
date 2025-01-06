@@ -9,7 +9,7 @@ import com.github.milegema.mlgm4a.data.files.FileRepositoryContext;
 import com.github.milegema.mlgm4a.data.files.filters.CompressionFilter;
 import com.github.milegema.mlgm4a.data.files.filters.ContentFilter;
 import com.github.milegema.mlgm4a.data.files.filters.EncryptionFilter;
-import com.github.milegema.mlgm4a.data.files.filters.FileStoreFilter;
+import com.github.milegema.mlgm4a.data.files.filters.FileStorageFilter;
 import com.github.milegema.mlgm4a.data.files.filters.SignatureFilter;
 import com.github.milegema.mlgm4a.security.KeyPairAlias;
 import com.github.milegema.mlgm4a.security.KeyPairHolder;
@@ -43,7 +43,7 @@ public final class AndroidTestComFactory {
         chain_builder.add(new SignatureFilter());
         chain_builder.add(new CompressionFilter());
         chain_builder.add(new EncryptionFilter());
-        chain_builder.add(new FileStoreFilter());
+        chain_builder.add(new FileStorageFilter());
 
         // make context
         FileRepositoryContext file_repo_ctx = new FileRepositoryContext();

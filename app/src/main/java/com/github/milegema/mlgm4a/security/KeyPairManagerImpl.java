@@ -79,23 +79,33 @@ public class KeyPairManagerImpl implements KeyPairManager {
             return fp;
         }
 
-        @Override
-        public boolean create() {
+        private KeyGenParameterSpec.Builder createNewKeyGenParameterSpecBuilder() {
+
             long now = System.currentTimeMillis();
             Date t1 = new Date(now - 1000);
             Date t2 = new Date(now + (1000L * 99L * 365 * 24 * 3600));
             int purposes = KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY | KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT;
-            int keySize = 1024 * 4;
+            int keySize = 1024 * 2;
+            String alias = this.mAlias.toString();
+
+            KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(alias, purposes);
+
+            builder.setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
+                    .setCertificateNotBefore(t1).setCertificateNotAfter(t2)
+                    .setKeySize(keySize);
+            builder.setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1, KeyProperties.ENCRYPTION_PADDING_RSA_OAEP);
+            builder.setBlockModes(KeyProperties.BLOCK_MODE_ECB, KeyProperties.BLOCK_MODE_CBC, KeyProperties.BLOCK_MODE_CTR, KeyProperties.BLOCK_MODE_GCM);
+            builder.setSignaturePaddings(KeyProperties.SIGNATURE_PADDING_RSA_PKCS1, KeyProperties.SIGNATURE_PADDING_RSA_PSS);
+
+            return builder;
+        }
+
+
+        @Override
+        public boolean create() {
             try {
-                String alias = this.mAlias.toString();
                 KeyPairGenerator kpg = KeyPairGenerator.getInstance(KeyProperties.KEY_ALGORITHM_RSA, "AndroidKeyStore");
-                kpg.initialize(new KeyGenParameterSpec.Builder(alias, purposes)
-                        .setDigests(KeyProperties.DIGEST_SHA256, KeyProperties.DIGEST_SHA512)
-                        .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_RSA_PKCS1, KeyProperties.ENCRYPTION_PADDING_RSA_OAEP)
-                        .setCertificateNotBefore(t1).setCertificateNotAfter(t2)
-                        .setBlockModes(KeyProperties.BLOCK_MODE_ECB, KeyProperties.BLOCK_MODE_CBC, KeyProperties.BLOCK_MODE_CTR)
-                        .setKeySize(keySize)
-                        .build());
+                kpg.initialize(this.createNewKeyGenParameterSpecBuilder().build());
                 KeyPair kp = kpg.generateKeyPair();
                 if (kp == null) {
                     throw new RuntimeException("result of generateKeyPair() is null");

@@ -38,11 +38,11 @@ public class FileAccessLayer {
         this.body = body;
     }
 
-    public void encode(FileAccessLayer layer) throws IOException {
+    public void encode() throws IOException {
         FileAccessLayerLS.encode(this);
     }
 
-    public void decode(FileAccessLayer layer) throws IOException {
+    public void decode() throws IOException {
         FileAccessLayerLS.decode(this);
     }
 }

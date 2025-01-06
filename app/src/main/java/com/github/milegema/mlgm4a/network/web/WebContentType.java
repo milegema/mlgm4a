@@ -7,7 +7,7 @@ public class WebContentType {
     private final String text;
 
     public WebContentType() {
-        this.text = "application/octet-stream";
+        this.text = ContentTypes.application_octet_stream;
     }
 
     public WebContentType(String str) {

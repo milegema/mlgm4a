@@ -25,6 +25,27 @@ public final class Names {
     public final static String block_created_at = "block.created_at";
     public final static String block_updated_at = "block.updated_at";
     public final static String block_salt = "block.salt";
+    public final static String block_id = "block.id";
+    public final static String block_sha256sum = "block.id"; // alias as 'block_id'
+    public final static String block_signature = "block.signature";
+
+    // cipher
+
+    public final static String cipher_padding = "cipher.padding";
+    public final static String cipher_mode = "cipher.mode";
+    public final static String cipher_iv = "cipher.iv";
+    public final static String cipher_algorithm = "cipher.algorithm";
+
+
+    // compression
+
+    public final static String compression_algorithm = "compression.algorithm";
+
+
+    // content-data
+
+    public final static String content_type = "content.type";
+    public final static String content_length = "content.length";
 
 
     // {repo}/config

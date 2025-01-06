@@ -34,4 +34,21 @@ public class FileAccessRequest {
     public void setBlocks(List<FileAccessBlock> blocks) {
         this.blocks = blocks;
     }
+
+    // 判断:是否为'读'请求
+    public static boolean isRead(FileAccessRequest req) {
+        if (req == null) {
+            return false;
+        }
+        return FileAccessAction.isRead(req.getAction());
+    }
+
+    // 判断:是否为'写'请求
+    public static boolean isWrite(FileAccessRequest req) {
+        if (req == null) {
+            return false;
+        }
+        return FileAccessAction.isWrite(req.getAction());
+    }
+
 }

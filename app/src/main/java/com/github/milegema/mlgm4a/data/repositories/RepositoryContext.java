@@ -13,7 +13,6 @@ import javax.crypto.SecretKey;
 
 public class RepositoryContext {
 
-
     // attributes
     private RepositoryAlias alias;
     private RepositoryLayout layout;

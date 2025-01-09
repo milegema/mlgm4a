@@ -39,11 +39,19 @@ public class RepositoryInitializer {
         KeyPair pair = context.getKeyPair();
         KeyFingerprint fingerprint = KeyFingerprint.compute(pair.getPublic());
         int ver = context.getFormatVersion();
-
         PropertyTable pt = PropertyTable.Factory.create();
+
         pt.put(Names.repository_alias, String.valueOf(alias));
         pt.put(Names.repository_format_version, String.valueOf(ver));
         pt.put(Names.repository_public_key_fingerprint, String.valueOf(fingerprint));
+
+        pt.put(Names.refs_blocks_app, "refs/blocks/app");
+        pt.put(Names.refs_blocks_root, "refs/blocks/root");
+        pt.put(Names.refs_blocks_user, "refs/blocks/users/current");
+
+        pt.put(Names.user_alias, "no_user_alias");
+        pt.put(Names.user_name, "no_user_name");
+        pt.put(Names.user_email, "no_user_email");
 
         RepositoryConfig config = context.getConfig();
         config.write(pt);

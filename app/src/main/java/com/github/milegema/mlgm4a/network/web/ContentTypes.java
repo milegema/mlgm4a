@@ -8,6 +8,9 @@ public final class ContentTypes {
     public static final String text_html = "text/html";
 
 
+    public static final String object_ref = "object/ref";
+
+
     private ContentTypes() {
     }
 }

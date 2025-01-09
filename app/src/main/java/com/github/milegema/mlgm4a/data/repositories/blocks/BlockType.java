@@ -10,6 +10,8 @@ public enum BlockType {
     Table,
     FooBar,
 
+    Ref,
+
     ////////////////////////////////
     // keys
 

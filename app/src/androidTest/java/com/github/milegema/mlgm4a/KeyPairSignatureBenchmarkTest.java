@@ -80,6 +80,9 @@ public class KeyPairSignatureBenchmarkTest {
     private final static String SIGNATURE_ALGORITHM = "SHA256withRSA";
 
     private void verify(ByteSlice signature, byte[] content, KeyPair pair) throws NoSuchAlgorithmException, SignatureException, InvalidKeyException {
+
+        Logs.debug("signature.bin.length: " + signature.getLength());
+
         SimpleVerifier v = new SimpleVerifier();
         v.setAlgorithm(SIGNATURE_ALGORITHM);
         v.setKey(pair.getPublic());

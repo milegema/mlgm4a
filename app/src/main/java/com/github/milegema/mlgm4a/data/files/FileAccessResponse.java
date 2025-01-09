@@ -1,5 +1,7 @@
 package com.github.milegema.mlgm4a.data.files;
 
+import com.github.milegema.mlgm4a.utils.ByteSlice;
+
 import java.util.List;
 
 public class FileAccessResponse {
@@ -7,10 +9,10 @@ public class FileAccessResponse {
     private FileAccessContext context;
     private FileAccessRequest request;
     private List<FileAccessBlock> blocks;
+    private ByteSlice raw; // 直接从文件读写的原始数据
 
     public FileAccessResponse() {
     }
-
 
     public FileAccessContext getContext() {
         return context;
@@ -34,5 +36,13 @@ public class FileAccessResponse {
 
     public void setBlocks(List<FileAccessBlock> blocks) {
         this.blocks = blocks;
+    }
+
+    public ByteSlice getRaw() {
+        return raw;
+    }
+
+    public void setRaw(ByteSlice raw) {
+        this.raw = raw;
     }
 }

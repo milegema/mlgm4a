@@ -6,8 +6,14 @@ import com.github.milegema.mlgm4a.utils.ByteSlice;
 
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.SecretKeySpec;
+
+
+/***
+ * 准备废弃: 使用基于仓库的 SecretKeyHolder 代替
+ * */
+
+@Deprecated
 
 public class SecretKeyManagerImpl implements SecretKeyManager {
 
@@ -73,6 +79,8 @@ public class SecretKeyManagerImpl implements SecretKeyManager {
             SecretKeyAlias alias = ctx.getAlias();
 
             PropertyTable head = PropertyTable.Factory.create();
+            ByteSlice body = new ByteSlice(data);
+
             head.put("content-type", "application/x-secret-key");
             head.put("content-length", String.valueOf(data.length));
             head.put("secret-key-algorithm", key.getAlgorithm());
@@ -80,7 +88,8 @@ public class SecretKeyManagerImpl implements SecretKeyManager {
 
             ContentLayer content = new ContentLayer();
             content.setHead(head);
-            content.setBody(new ByteSlice(data));
+            content.setBody(body);
+
             ctx.setContent(content);
             ctx.getStore().put(alias, ctx);
         }
@@ -124,6 +133,11 @@ public class SecretKeyManagerImpl implements SecretKeyManager {
             this.context.setKey(sk);
             c2.setKey(sk);
             return sk;
+        }
+
+        @Override
+        public void reload() {
+
         }
 
         @Override

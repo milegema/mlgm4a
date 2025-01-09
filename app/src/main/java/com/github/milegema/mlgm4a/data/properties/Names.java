@@ -48,7 +48,27 @@ public final class Names {
     public final static String content_length = "content.length";
 
 
+    // layer
+
+    public final static String layer_class = "layer";
+    // public final static String layer_index = "layer.index";
+
+
+    // secret-key
+
+    public final static String secret_key_algorithm = "secret-key.algorithm";
+    public final static String secret_key_format = "secret-key.format";
+    public final static String secret_key_size = "secret-key.size";
+
+    // signature
+
+    public final static String signature_algorithm = "signature.algorithm";
+
     // {repo}/config
+
+    public final static String repository_alias = "repository.alias";
+    public final static String repository_format_version = "repository.format.version"; // current=1
+    public final static String repository_public_key_fingerprint = "repository.public-key.fingerprint";
 
     public final static String refs_blocks_root = "refs.blocks.root"; // q-name of root-block
     public final static String refs_blocks_app = "refs.blocks.app"; // q-name of app-block

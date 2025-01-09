@@ -2,6 +2,7 @@ package com.github.milegema.mlgm4a.data.properties;
 
 import android.util.NoSuchPropertyException;
 
+import com.github.milegema.mlgm4a.data.files.FileAccessLayerClass;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
@@ -164,6 +165,18 @@ public class PropertyGetter {
         return getDataAuto(name, def);
     }
 
+    public FileAccessLayerClass getFileAccessLayerClass(String name, FileAccessLayerClass def) {
+        String str = innerGet(name);
+        if (str == null) {
+            return def;
+        }
+        try {
+            return FileAccessLayerClass.valueOf(str);
+        } catch (Exception e) {
+            Errors.handle(null, e);
+        }
+        return def;
+    }
 
     public BlockType getBlockType(String name, BlockType def) {
         String str = innerGet(name);

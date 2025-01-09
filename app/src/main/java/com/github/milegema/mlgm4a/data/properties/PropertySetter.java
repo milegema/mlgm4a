@@ -1,6 +1,7 @@
 package com.github.milegema.mlgm4a.data.properties;
 
 
+import com.github.milegema.mlgm4a.data.files.FileAccessLayerClass;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
@@ -107,6 +108,15 @@ public class PropertySetter {
     public void put(String name, boolean value) {
         innerSet(name, String.valueOf(value));
     }
+
+
+    public void put(String name, FileAccessLayerClass value) {
+        if (value == null) {
+            value = FileAccessLayerClass.UNKNOWN;
+        }
+        innerSet(name, value.name());
+    }
+
 
     public void put(String name, CipherPadding value) {
         if (value == null) {

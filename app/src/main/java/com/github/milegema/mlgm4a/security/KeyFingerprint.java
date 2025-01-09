@@ -3,7 +3,10 @@ package com.github.milegema.mlgm4a.security;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.github.milegema.mlgm4a.security.hash.Hash;
 import com.github.milegema.mlgm4a.security.hash.SHA256SUM;
+
+import java.security.PublicKey;
 
 /****
  * 表示公钥指纹.  对于 PrivateKey 和 SecretKey, 应该使用与 PublicKey-Fingerprint 相等的值.
@@ -42,6 +45,12 @@ public final class KeyFingerprint {
             return other.sum.equals(this.sum);
         }
         return false;
+    }
+
+    public static KeyFingerprint compute(PublicKey pk) {
+        byte[] data = pk.getEncoded();
+        byte[] sum = Hash.sum(data, Hash.SHA256);
+        return new KeyFingerprint(sum);
     }
 
     @NonNull

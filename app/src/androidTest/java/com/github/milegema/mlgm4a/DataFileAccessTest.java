@@ -9,10 +9,9 @@ import com.github.milegema.mlgm4a.data.files.FileAccessAction;
 import com.github.milegema.mlgm4a.data.files.FileAccessContext;
 import com.github.milegema.mlgm4a.data.files.FileAccessRequest;
 import com.github.milegema.mlgm4a.data.files.FileAccessResponse;
-import com.github.milegema.mlgm4a.data.files.FileRepositoryContext;
+import com.github.milegema.mlgm4a.data.files.RepositoryFileContext;
 import com.github.milegema.mlgm4a.logs.Logs;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,12 +34,14 @@ public class DataFileAccessTest {
         //   Assert.assertEquals("com.github.milegema.mlgm4a", appContext.getPackageName());
         Context appContext = ApplicationProvider.getApplicationContext();
 
-        FileRepositoryContext file_repo_ctx = AndroidTestComFactory.createFileRepositoryContext(appContext);
+        RepositoryFileContext file_repo_ctx = AndroidTestComFactory.createFileRepositoryContext(appContext);
         Path file = file_repo_ctx.getFolder().resolve("tmp/test/file1");
 
-        FileAccessContext file_acc_ctx = new FileAccessContext(file_repo_ctx);
-        file_acc_ctx.setKey(null); // auto
+        FileAccessContext file_acc_ctx = new FileAccessContext();
+        file_acc_ctx.setSecretKey(null); // auto
+        file_acc_ctx.setKeyPair(null);
         file_acc_ctx.setFile(file);
+        file_acc_ctx.setChain(file_repo_ctx.getChain());
 
         // create
         FileAccessRequest req = new FileAccessRequest();

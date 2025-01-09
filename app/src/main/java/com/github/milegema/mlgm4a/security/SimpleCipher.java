@@ -17,11 +17,10 @@ import javax.crypto.spec.IvParameterSpec;
 
 public final class SimpleCipher {
 
+    private String provider; // optional
     private String algorithm; // required
     private CipherMode mode; // required
     private CipherPadding padding; // required
-
-    private String provider; // optional
     private byte[] iv; // optional
 
     public SimpleCipher() {
@@ -67,7 +66,6 @@ public final class SimpleCipher {
         this.iv = iv;
     }
 
-
     private Cipher createNewCipher() throws NoSuchPaddingException, NoSuchAlgorithmException, NoSuchProviderException {
         String p = this.provider;
         String transformation = this.algorithm + '/' + this.mode + '/' + this.padding;
@@ -80,35 +78,41 @@ public final class SimpleCipher {
         return Cipher.getInstance(transformation);
     }
 
+    private void prepare_iv(Cipher ci) {
+        SimpleCipherIV iv_tool = new SimpleCipherIV();
+        iv_tool.setCipher(ci);
+        iv_tool.setParent(this);
+        iv_tool.setIv(this.iv);
+        iv_tool.apply();
+        this.iv = iv_tool.getIv();
+    }
 
     private void initCipher(Cipher ci, int op_mode, Key key) throws InvalidKeyException, InvalidAlgorithmParameterException {
-        byte[] v = this.iv;
-        if (v == null) {
+        this.prepare_iv(ci);
+        if (this.iv == null) {
             ci.init(op_mode, key);
-            return;
+        } else {
+            IvParameterSpec ips = new IvParameterSpec(this.iv);
+            ci.init(op_mode, key, ips);
         }
-        IvParameterSpec ips = new IvParameterSpec(v);
-        ci.init(op_mode, key, ips);
     }
 
-    private void tryLoadDefaultParams() {
-        CipherPadding p = this.padding;
+    private void tryLoadDefaultParams(String final_algorithm) {
         CipherMode m = this.mode;
-
+        CipherPadding p = this.padding;
         if (m == null) {
             m = CipherMode.NONE;
-            this.mode = m;
         }
-
         if (p == null) {
             p = CipherPadding.NoPadding;
-            this.padding = p;
         }
+        this.algorithm = final_algorithm;
+        this.mode = m;
+        this.padding = p;
     }
 
-
     public ByteSlice encrypt(ByteSlice plain, PublicKey key) {
-        this.tryLoadDefaultParams();
+        this.tryLoadDefaultParams(key.getAlgorithm());
         try {
             Cipher ci = this.createNewCipher();
             this.initCipher(ci, Cipher.ENCRYPT_MODE, key);
@@ -120,7 +124,7 @@ public final class SimpleCipher {
     }
 
     public ByteSlice encrypt(ByteSlice plain, SecretKey key) {
-        this.tryLoadDefaultParams();
+        this.tryLoadDefaultParams(key.getAlgorithm());
         try {
             Cipher ci = this.createNewCipher();
             this.initCipher(ci, Cipher.ENCRYPT_MODE, key);
@@ -132,7 +136,7 @@ public final class SimpleCipher {
     }
 
     public ByteSlice decrypt(ByteSlice encrypted, SecretKey key) {
-        this.tryLoadDefaultParams();
+        this.tryLoadDefaultParams(key.getAlgorithm());
         try {
             Cipher ci = this.createNewCipher();
             this.initCipher(ci, Cipher.DECRYPT_MODE, key);
@@ -144,7 +148,7 @@ public final class SimpleCipher {
     }
 
     public ByteSlice decrypt(ByteSlice encrypted, PrivateKey key) {
-        this.tryLoadDefaultParams();
+        this.tryLoadDefaultParams(key.getAlgorithm());
         try {
             Cipher ci = this.createNewCipher();
             this.initCipher(ci, Cipher.DECRYPT_MODE, key);

@@ -85,7 +85,7 @@ public class KeyPairManagerImpl implements KeyPairManager {
             Date t1 = new Date(now - 1000);
             Date t2 = new Date(now + (1000L * 99L * 365 * 24 * 3600));
             int purposes = KeyProperties.PURPOSE_SIGN | KeyProperties.PURPOSE_VERIFY | KeyProperties.PURPOSE_ENCRYPT | KeyProperties.PURPOSE_DECRYPT;
-            int keySize = 1024 * 2;
+            int keySize = 1024 * 4;
             String alias = this.mAlias.toString();
 
             KeyGenParameterSpec.Builder builder = new KeyGenParameterSpec.Builder(alias, purposes);

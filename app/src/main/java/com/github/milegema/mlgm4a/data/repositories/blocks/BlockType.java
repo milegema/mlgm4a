@@ -13,8 +13,9 @@ public enum BlockType {
     ////////////////////////////////
     // keys
 
-    SecretKey,
     KeyPair,
+    SecretKey,
+    SecretKeySignature,
 
     ////////////////////////////////
     // blocks

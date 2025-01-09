@@ -5,7 +5,7 @@ import com.github.milegema.mlgm4a.data.files.layers.ContentLayer;
 import com.github.milegema.mlgm4a.data.files.layers.EncryptionLayer;
 import com.github.milegema.mlgm4a.data.files.layers.FileStorageLayer;
 import com.github.milegema.mlgm4a.data.files.layers.PemLayer;
-import com.github.milegema.mlgm4a.data.files.layers.SignatureLayer;
+import com.github.milegema.mlgm4a.data.files.layers.SumLayer;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 
@@ -14,20 +14,23 @@ public class FileAccessBlock {
     private BlockID id;
     private BlockType type;
 
+    // layers
+
     private final ContentLayer contentLayer;
-    private final SignatureLayer signatureLayer;
+    private final SumLayer sumLayer;
     private final CompressionLayer compressionLayer;
     private final EncryptionLayer encryptionLayer;
     private final PemLayer pemLayer;
-    private final FileStorageLayer storageLayer;
+
+    // private final FileStorageLayer storageLayer; // 不需要这一层
 
     public FileAccessBlock() {
         this.contentLayer = new ContentLayer();
-        this.signatureLayer = new SignatureLayer();
+        this.sumLayer = new SumLayer();
         this.compressionLayer = new CompressionLayer();
         this.encryptionLayer = new EncryptionLayer();
         this.pemLayer = new PemLayer();
-        this.storageLayer = new FileStorageLayer();
+        //   this.storageLayer = new FileStorageLayer();
     }
 
     public BlockID getId() {
@@ -42,8 +45,8 @@ public class FileAccessBlock {
         return contentLayer;
     }
 
-    public SignatureLayer getSignatureLayer() {
-        return signatureLayer;
+    public SumLayer getSumLayer() {
+        return sumLayer;
     }
 
     public CompressionLayer getCompressionLayer() {
@@ -56,10 +59,6 @@ public class FileAccessBlock {
 
     public PemLayer getPemLayer() {
         return pemLayer;
-    }
-
-    public FileStorageLayer getStorageLayer() {
-        return storageLayer;
     }
 
     public BlockType getType() {

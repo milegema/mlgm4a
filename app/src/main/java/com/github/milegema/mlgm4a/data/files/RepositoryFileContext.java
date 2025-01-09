@@ -3,13 +3,17 @@ package com.github.milegema.mlgm4a.data.files;
 import java.nio.file.Path;
 import java.security.KeyPair;
 
-public class FileRepositoryContext {
+import javax.crypto.SecretKey;
 
-    private KeyPair keyPair;
-    private FileAccessFilterChain chain;
+public final class RepositoryFileContext {
+
     private Path folder;
 
-    public FileRepositoryContext() {
+    private KeyPair keyPair;
+    private SecretKey secretKey;
+    private FileAccessFilterChain chain;
+
+    public RepositoryFileContext() {
     }
 
     public Path getFolder() {
@@ -36,4 +40,11 @@ public class FileRepositoryContext {
         this.keyPair = keyPair;
     }
 
+    public SecretKey getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(SecretKey secretKey) {
+        this.secretKey = secretKey;
+    }
 }

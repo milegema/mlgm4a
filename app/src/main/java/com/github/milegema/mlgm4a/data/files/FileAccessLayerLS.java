@@ -1,5 +1,7 @@
 package com.github.milegema.mlgm4a.data.files;
 
+import com.github.milegema.mlgm4a.data.properties.Names;
+import com.github.milegema.mlgm4a.data.properties.PropertyGetter;
 import com.github.milegema.mlgm4a.data.properties.PropertyTable;
 import com.github.milegema.mlgm4a.data.properties.PropertyTableLS;
 import com.github.milegema.mlgm4a.utils.ByteSlice;
@@ -12,12 +14,31 @@ public final class FileAccessLayerLS {
     private FileAccessLayerLS() {
     }
 
-    public static void encode(FileAccessLayer layer) throws IOException {
-        if (layer == null) {
-            return;
+    /*
+
+    public static ByteSlice encode(FileAccessLayer src) throws IOException {
+        FileAccessLayerPack pack = src.getPack();
+        PropertyTable head = pack.getHead();
+        if (head == null) {
+            head = PropertyTable.Factory.create();
+            pack.setHead(head);
         }
-        PropertyTable src_head = layer.getHead();
-        ByteSlice src_body = layer.getBody();
+        head.put(Names.layer_class, String.valueOf(src.getLayerClass()));
+        // head.put(Names.layer_index, String.valueOf(src.getLayerIndex()));
+        return encode(pack);
+    }
+
+
+
+     */
+
+
+    public static ByteSlice encode(FileAccessLayerPack src) throws IOException {
+        if (src == null) {
+            return null;
+        }
+        PropertyTable src_head = src.getHead();
+        ByteSlice src_body = src.getBody();
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte[] head_bin = PropertyTableLS.encode(src_head);
         buffer.write(head_bin);
@@ -25,16 +46,27 @@ public final class FileAccessLayerLS {
         if (src_body != null) {
             buffer.write(src_body.getData(), src_body.getOffset(), src_body.getLength());
         }
-        layer.setEncoded(new ByteSlice(buffer.toByteArray()));
+        return new ByteSlice(buffer.toByteArray());
     }
 
-    public static void decode(FileAccessLayer layer) throws IOException {
-        if (layer == null) {
-            return;
-        }
-        final ByteSlice src = layer.getEncoded();
+    /*
+    public static FileAccessLayer decodeLayer(ByteSlice src) throws IOException {
+        FileAccessLayerPack pack = decodePack(src);
+        FileAccessLayer layer = new FileAccessLayer();
+        PropertyGetter pGetter = new PropertyGetter(pack.getHead());
+        FileAccessLayerClass layer_class = pGetter.getFileAccessLayerClass(Names.layer_class, FileAccessLayerClass.UNKNOWN);
+        int layer_index = pGetter.getInt(Names.layer_index, 0);
+        layer.setLayerClass(layer_class);
+        layer.setLayerIndex(layer_index);
+        return layer;
+    }
+
+     */
+
+
+    public static FileAccessLayerPack decodePack(ByteSlice src) throws IOException {
         if (src == null) {
-            return;
+            return null;
         }
         final byte[] buffer_in = src.getData();
         final int i_start = src.getOffset();
@@ -58,7 +90,9 @@ public final class FileAccessLayerLS {
         }
         PropertyTable head = PropertyTableLS.decode(buffer1.toByteArray());
         ByteSlice body = new ByteSlice(buffer2.toByteArray());
-        layer.setHead(head);
-        layer.setBody(body);
+        FileAccessLayerPack dst = new FileAccessLayerPack();
+        dst.setHead(head);
+        dst.setBody(body);
+        return dst;
     }
 }

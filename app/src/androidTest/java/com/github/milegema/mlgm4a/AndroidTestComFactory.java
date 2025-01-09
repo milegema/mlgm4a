@@ -5,12 +5,12 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.github.milegema.mlgm4a.data.files.FileAccessFilterChainBuilder;
-import com.github.milegema.mlgm4a.data.files.FileRepositoryContext;
+import com.github.milegema.mlgm4a.data.files.RepositoryFileContext;
 import com.github.milegema.mlgm4a.data.files.filters.CompressionFilter;
 import com.github.milegema.mlgm4a.data.files.filters.ContentFilter;
 import com.github.milegema.mlgm4a.data.files.filters.EncryptionFilter;
 import com.github.milegema.mlgm4a.data.files.filters.FileStorageFilter;
-import com.github.milegema.mlgm4a.data.files.filters.SignatureFilter;
+import com.github.milegema.mlgm4a.data.files.filters.SumFilter;
 import com.github.milegema.mlgm4a.security.KeyPairAlias;
 import com.github.milegema.mlgm4a.security.KeyPairHolder;
 import com.github.milegema.mlgm4a.security.KeyPairManager;
@@ -25,7 +25,7 @@ public final class AndroidTestComFactory {
     }
 
 
-    public static FileRepositoryContext createFileRepositoryContext(Context ctx) {
+    public static RepositoryFileContext createFileRepositoryContext(Context ctx) {
 
         // init key-pair
         KeyPairManager kpm = createKeyPairManager(ctx);
@@ -40,13 +40,13 @@ public final class AndroidTestComFactory {
         // init chain
         FileAccessFilterChainBuilder chain_builder = new FileAccessFilterChainBuilder();
         chain_builder.add(new ContentFilter());
-        chain_builder.add(new SignatureFilter());
+        chain_builder.add(new SumFilter());
         chain_builder.add(new CompressionFilter());
         chain_builder.add(new EncryptionFilter());
         chain_builder.add(new FileStorageFilter());
 
         // make context
-        FileRepositoryContext file_repo_ctx = new FileRepositoryContext();
+        RepositoryFileContext file_repo_ctx = new RepositoryFileContext();
         file_repo_ctx.setKeyPair(key_pair_h.fetch());
         file_repo_ctx.setFolder(file_dir.resolve("tmp/test/repo/dir"));
         file_repo_ctx.setChain(chain_builder.create());

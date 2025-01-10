@@ -15,4 +15,10 @@ public final class BlockID extends SHA256SUM {
         super(bin);
     }
 
+    public static boolean equals(BlockID a, BlockID b) {
+        if (a == null || b == null) {
+            return false;
+        }
+        return a.equals(b);
+    }
 }

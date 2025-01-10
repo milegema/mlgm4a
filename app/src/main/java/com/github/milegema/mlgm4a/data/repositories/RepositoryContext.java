@@ -17,7 +17,7 @@ public class RepositoryContext {
     private RepositoryAlias alias;
     private RepositoryLayout layout;
     private RepositoryHolder holder;
-    private RepositoryFileContext files;
+    private RepositoryFileContext rfc;
     private Path location; // location of repository folder '.milegema'
     private int formatVersion;
 
@@ -49,7 +49,7 @@ public class RepositoryContext {
         this.layout = ctx.layout;
         this.location = ctx.location;
         this.holder = ctx.holder;
-        this.files = ctx.files;
+        this.rfc = ctx.rfc;
         this.formatVersion = ctx.formatVersion;
 
         this.config = ctx.config;
@@ -127,12 +127,12 @@ public class RepositoryContext {
         this.repository = repository;
     }
 
-    public RepositoryFileContext getFiles() {
-        return files;
+    public RepositoryFileContext getRfc() {
+        return rfc;
     }
 
-    public void setFiles(RepositoryFileContext files) {
-        this.files = files;
+    public void setRfc(RepositoryFileContext rfc) {
+        this.rfc = rfc;
     }
 
     public SecretKeyHolder getSecretKeyHolder() {

@@ -41,18 +41,17 @@ public class AndroidRepositoryManager implements RepositoryManager {
 
         ctx.setKeyPair(kp);
 
-
         ctx.setAlias(alias);
         ctx.setHolder(new MyHolder(ctx));
-        ctx.setLayout(null);
-        ctx.setFiles(this.createFileRepositoryContext(ctx));
         ctx.setLocation(location);
+
+        ctx.setLayout(null);
+        ctx.setRfc(this.createFileRepositoryContext(ctx));
 
         ctx.setConfig(null);
         ctx.setRefs(null);
         ctx.setRepository(null);
         ctx.setTables(null);
-
 
         return ctx.getHolder();
     }

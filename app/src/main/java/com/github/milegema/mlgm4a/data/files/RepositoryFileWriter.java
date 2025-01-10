@@ -8,7 +8,6 @@ import com.github.milegema.mlgm4a.security.CipherMode;
 import com.github.milegema.mlgm4a.security.CipherPadding;
 import com.github.milegema.mlgm4a.utils.ByteSlice;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
@@ -20,6 +19,7 @@ import javax.crypto.SecretKey;
 public final class RepositoryFileWriter {
 
     private RepositoryContext context;
+    private RepositoryFileCallback callback;
 
     private BlockType blockType;
     private String contentType;
@@ -72,6 +72,13 @@ public final class RepositoryFileWriter {
         this.head = head;
     }
 
+    public RepositoryFileCallback getCallback() {
+        return callback;
+    }
+
+    public void setCallback(RepositoryFileCallback callback) {
+        this.callback = callback;
+    }
 
     // writer
 
@@ -127,11 +134,12 @@ public final class RepositoryFileWriter {
         FileAccessBlock block = new FileAccessBlock();
 
         // context
-        ctx.setChain(context.getFiles().getChain());
+        ctx.setChain(context.getRfc().getChain());
         ctx.setFile(dst);
         ctx.setKeyPair(context.getKeyPair());
         ctx.setSecretKey(sk);
         ctx.setAccessKey(new FileAccessKeyProxy(sk));
+        ctx.setDataStateListener(this.callback);
 
         // block
         block.getContentLayer().setBody(data);

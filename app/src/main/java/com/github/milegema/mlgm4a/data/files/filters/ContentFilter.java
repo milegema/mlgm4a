@@ -48,6 +48,7 @@ public class ContentFilter implements FileAccessFilterRegistry, FileAccessFilter
 
         final FileAccessBlock block = encoding.getBlock();
         final FileAccessLayerPack pack = encoding.getPack();
+        final long now = System.currentTimeMillis();
 
         ContentLayer current = block.getContentLayer();
         PropertyTable head_1 = current.getHead();
@@ -57,6 +58,8 @@ public class ContentFilter implements FileAccessFilterRegistry, FileAccessFilter
         BlockType block_type = block.getType();
         String content_type = current.getContentType();
         int content_len = body.getLength();
+        long created_at = current.getCreatedAt();
+        long updated_at = current.getUpdatedAt();
 
         if (block_type == null) {
             block_type = BlockType.BLOB;
@@ -64,9 +67,17 @@ public class ContentFilter implements FileAccessFilterRegistry, FileAccessFilter
         if (content_type == null) {
             content_type = ContentTypes.application_octet_stream;
         }
+        if (created_at == 0) {
+            created_at = now;
+        }
+        if (updated_at == 0) {
+            updated_at = now;
+        }
 
         PropertySetter pSetter = new PropertySetter(head);
         pSetter.put(Names.block_type, block_type);
+        pSetter.put(Names.block_created_at, created_at);
+        pSetter.put(Names.block_updated_at, updated_at);
         pSetter.put(Names.content_type, content_type);
         pSetter.put(Names.content_length, content_len);
 
@@ -94,6 +105,8 @@ public class ContentFilter implements FileAccessFilterRegistry, FileAccessFilter
         BlockType block_type = pGetter.getBlockType(Names.block_type, BlockType.BLOB);
         String content_type = pGetter.getString(Names.content_type, ContentTypes.application_octet_stream);
         final int want_len = pGetter.getInt(Names.content_length, -1);
+        final long created_at = pGetter.getLong(Names.block_created_at, 0);
+        final long updated_at = pGetter.getLong(Names.block_updated_at, 0);
 
         // verify size
         final int have_len = body.getLength();
@@ -107,6 +120,8 @@ public class ContentFilter implements FileAccessFilterRegistry, FileAccessFilter
         current.setContentType(content_type);
         current.getPack().setHead(pack.getHead());
         current.getPack().setBody(pack.getBody());
+        current.setCreatedAt(created_at);
+        current.setUpdatedAt(updated_at);
     }
 
     @Override

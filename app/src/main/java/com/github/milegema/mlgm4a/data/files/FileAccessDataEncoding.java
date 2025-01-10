@@ -10,6 +10,7 @@ public class FileAccessDataEncoding {
     private FileAccessBlock block;
     private FileAccessLayerPack pack;
     private ByteSlice encoded;
+    private FileAccessLayerClass layerClass;
 
     public FileAccessDataEncoding() {
     }
@@ -44,6 +45,14 @@ public class FileAccessDataEncoding {
 
     public void setBlock(FileAccessBlock block) {
         this.block = block;
+    }
+
+    public FileAccessLayerClass getLayerClass() {
+        return layerClass;
+    }
+
+    public void setLayerClass(FileAccessLayerClass layerClass) {
+        this.layerClass = layerClass;
     }
 
     public FileAccessRequest getRequest() {

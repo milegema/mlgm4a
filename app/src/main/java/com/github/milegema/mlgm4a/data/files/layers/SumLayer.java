@@ -7,7 +7,8 @@ import com.github.milegema.mlgm4a.utils.ByteSlice;
 public class SumLayer extends FileAccessLayer {
 
     private BlockID id;
-    private ByteSlice entity;
+
+    // private ByteSlice entity;
 
     public SumLayer() {
     }
@@ -21,10 +22,10 @@ public class SumLayer extends FileAccessLayer {
     }
 
     public ByteSlice getEntity() {
-        return entity;
+        return this.getPack().getBody();
     }
 
     public void setEntity(ByteSlice entity) {
-        this.entity = entity;
+        this.getPack().setBody(entity);
     }
 }

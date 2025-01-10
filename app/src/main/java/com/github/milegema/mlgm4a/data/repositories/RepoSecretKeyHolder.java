@@ -67,7 +67,7 @@ public class RepoSecretKeyHolder implements SecretKeyHolder {
             FileAccessContext ctx = new FileAccessContext();
             FileAccessOptions op = new FileAccessOptions();
             FileAccessRequest req = new FileAccessRequest();
-            FileAccessFilterChain chain = this.context.getFiles().getChain();
+            FileAccessFilterChain chain = this.context.getRfc().getChain();
 
             ctx.setFile(file);
             ctx.setChain(chain);
@@ -252,12 +252,12 @@ public class RepoSecretKeyHolder implements SecretKeyHolder {
             block_list.add(block2);
 
             // request
-            RepositoryFileContext fr_ctx = this.context.getFiles();
+            RepositoryFileContext rfc = this.context.getRfc();
             FileAccessContext fa_ctx = new FileAccessContext();
             FileAccessRequest req = new FileAccessRequest();
 
             fa_ctx.setFile(file);
-            fa_ctx.setChain(fr_ctx.getChain());
+            fa_ctx.setChain(rfc.getChain());
             fa_ctx.setAccessKey(new FileAccessKeyProxy(sk)); // sk
             fa_ctx.setKeyPair(key_pair);
             fa_ctx.setSecretKey(sk);

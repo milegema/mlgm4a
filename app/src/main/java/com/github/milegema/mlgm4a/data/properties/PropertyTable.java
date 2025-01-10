@@ -11,6 +11,12 @@ public interface PropertyTable {
         public static PropertyTable create() {
             return new PropertyTableImpl();
         }
+
+        public static PropertyTable copy(PropertyTable src) {
+            PropertyTable dst = new PropertyTableImpl();
+            dst.importAll(src.exportAll(null));
+            return dst;
+        }
     }
 
     void put(String name, String value);

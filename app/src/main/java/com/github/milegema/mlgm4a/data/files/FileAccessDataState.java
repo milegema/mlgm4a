@@ -8,4 +8,12 @@ public enum FileAccessDataState {
     decode_block_begin,
     decode_block_end,
 
+
+
+    encode_layer_begin,
+    encode_layer_end,
+
+    decode_layer_begin,
+    decode_layer_end,
+
 }

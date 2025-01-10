@@ -8,9 +8,8 @@ public class ContentLayer extends FileAccessLayer {
 
     private int contentLength; // content-length
     private String contentType; // content-type
-
-    // private PropertyTable head;
-    // private ByteSlice body;
+    private long createdAt;
+    private long updatedAt;
 
     public ContentLayer() {
     }
@@ -45,5 +44,21 @@ public class ContentLayer extends FileAccessLayer {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

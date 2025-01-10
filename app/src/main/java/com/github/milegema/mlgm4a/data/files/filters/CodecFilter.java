@@ -70,13 +70,20 @@ public class CodecFilter implements FileAccessFilterRegistry, FileAccessFilter {
                 if (layer_class == null) {
                     break;
                 }
+
                 encoding.setPack(pack);
                 encoding.setEncoded(encoded);
+                encoding.setLayerClass(layer_class);
+
                 FileAccessDataCodec codec = codec_group.findCodec(layer_class);
                 if (codec == null) {
                     throw new FileAccessException("unsupported file-access-layer class:" + layer_class);
                 }
+
+                this.dispatch_data_state_change_event(FileAccessDataState.decode_layer_begin, encoding, data_state_listener);
                 codec.decode(encoding); // call codec
+                this.dispatch_data_state_change_event(FileAccessDataState.decode_layer_end, encoding, data_state_listener);
+
                 encoded = pack.getBody();
             }
             this.dispatch_data_state_change_event(FileAccessDataState.decode_block_end, encoding, data_state_listener);
@@ -108,9 +115,15 @@ public class CodecFilter implements FileAccessFilterRegistry, FileAccessFilter {
                 // head.put(Names.layer_index, String.valueOf(index));
                 pack.setHead(head);
                 pack.setBody(encoded);
+
                 encoding.setPack(pack);
                 encoding.setEncoded(null);
+                encoding.setLayerClass(cl);
+
+                this.dispatch_data_state_change_event(FileAccessDataState.encode_layer_begin, encoding, listener);
                 codec.encode(encoding); // call codec
+                this.dispatch_data_state_change_event(FileAccessDataState.encode_layer_end, encoding, listener);
+
                 encoded = getEncodeResult(encoding);
             }
             PemLayer pl = block.getPemLayer();

@@ -47,4 +47,9 @@ public final class RepositoryFileContext {
     public void setSecretKey(SecretKey secretKey) {
         this.secretKey = secretKey;
     }
+
+    public Path nextTemporaryFile() {
+        Path dir = this.folder.resolve("tmp");
+        return RepositoryTemporaryFileManager.getInstance().nextTempFile(dir);
+    }
 }

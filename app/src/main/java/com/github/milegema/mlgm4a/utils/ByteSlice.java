@@ -3,6 +3,7 @@ package com.github.milegema.mlgm4a.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class ByteSlice {
 
@@ -40,6 +41,15 @@ public class ByteSlice {
         this.length = len;
     }
 
+    public ByteSlice(String text) {
+        if (text == null) {
+            return;
+        }
+        byte[] bin = text.getBytes(StandardCharsets.UTF_8);
+        this.data = bin;
+        this.offset = 0;
+        this.length = bin.length;
+    }
 
     public byte[] getData() {
         return data;

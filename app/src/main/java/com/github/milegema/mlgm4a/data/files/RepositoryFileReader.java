@@ -12,6 +12,7 @@ import java.util.List;
 public final class RepositoryFileReader {
 
     private RepositoryContext context;
+    private RepositoryFileCallback callback;
 
     public RepositoryFileReader(RepositoryContext ctx) {
         this.context = ctx;
@@ -25,6 +26,14 @@ public final class RepositoryFileReader {
 
     public void setContext(RepositoryContext context) {
         this.context = context;
+    }
+
+    public RepositoryFileCallback getCallback() {
+        return callback;
+    }
+
+    public void setCallback(RepositoryFileCallback callback) {
+        this.callback = callback;
     }
 
     // reader
@@ -43,10 +52,11 @@ public final class RepositoryFileReader {
         FileAccessContext ctx = new FileAccessContext();
         FileAccessRequest req = new FileAccessRequest();
 
-        ctx.setChain(context.getFiles().getChain());
+        ctx.setChain(context.getRfc().getChain());
         ctx.setFile(file);
         ctx.setKeyPair(context.getKeyPair());
         ctx.setSecretKey(context.getSecretKey());
+        ctx.setDataStateListener(this.callback);
 
         // request
         req.setAction(FileAccessAction.READ_ALL);

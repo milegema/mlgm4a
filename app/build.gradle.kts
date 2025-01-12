@@ -40,7 +40,7 @@ android {
 }
 
 dependencies {
-    implementation("com.google.code.gson:gson:2.10.1")
+    api(project(":libmlgm"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

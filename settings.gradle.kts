@@ -21,3 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "mlgm4a"
 include(":app")
+include(":frontend")
+include(":backend")
+include(":libmlgm")

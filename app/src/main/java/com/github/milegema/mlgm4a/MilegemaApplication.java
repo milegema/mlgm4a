@@ -1,27 +1,17 @@
 package com.github.milegema.mlgm4a;
 
-import android.app.Application;
 import android.content.Context;
 
-import com.github.milegema.mlgm4a.contexts.ContextHolder;
+import com.github.milegema.mlgm4a.application.BaseMilegemaApplication;
 
-public class MilegemaApplication extends Application implements MilegemaApp {
+public class MilegemaApplication extends BaseMilegemaApplication {
 
-    private ContextHolder mContextHolder;
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
 
     public static MilegemaApplication getInstance(Context ctx) {
         return (MilegemaApplication) ctx.getApplicationContext();
-    }
-
-    @Override
-    public ContextHolder getContextHolder() {
-        ContextHolder ch = mContextHolder;
-        if (ch == null) {
-            ch = new ContextHolder();
-            ch.setApp(this);
-            ch.setAndroid(this);
-            mContextHolder = ch;
-        }
-        return ch;
     }
 }

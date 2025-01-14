@@ -52,6 +52,7 @@ public class ComLifeEventDispatcher implements ComLifecycle {
         forEachLife(false, (life) -> {
             invoke(false, life.getOnCreate());
         });
+        this.context.setCreated(true);
     }
 
     private void onDestroy() throws Exception {
@@ -72,6 +73,18 @@ public class ComLifeEventDispatcher implements ComLifecycle {
         });
     }
 
+    private void onResume() throws Exception {
+        forEachLife(false, (life) -> {
+            invoke(false, life.getOnResume());
+        });
+    }
+
+    private void onPause() throws Exception {
+        forEachLife(false, (life) -> {
+            invoke(false, life.getOnPause());
+        });
+    }
+
     private void onLoop() throws Exception {
         forEachLife(false, (life) -> {
             invoke(false, life.getLoop());
@@ -84,7 +97,11 @@ public class ComLifeEventDispatcher implements ComLifecycle {
         ComLife cl = new ComLife();
         cl.setOnCreate(this::onCreate);
         cl.setOnStart(this::onStart);
+
+        cl.setOnResume(this::onResume);
         cl.setLoop(this::onLoop);
+        cl.setOnPause(this::onPause);
+
         cl.setOnStop(this::onStop);
         cl.setOnDestroy(this::onDestroy);
         return cl;

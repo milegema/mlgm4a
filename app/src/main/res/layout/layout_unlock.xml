@@ -5,15 +5,23 @@
     android:layout_height="match_parent"
     android:background="#075"
     android:orientation="vertical"
-    tools:context=".ExampleActivity">
+    tools:context=".UnlockActivity">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        android:layout_weight="1"
+        android:background="#70DBA0A0"
         android:gravity="center"
-        android:text="example"
+        android:text="Unlock with Graph"
         android:textColor="#eee"
         android:textSize="20sp" />
+
+    <com.github.milegema.mlgm4a.ui.views.UnlockGraphView
+        android:id="@+id/unlock_graph_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
 </LinearLayout>

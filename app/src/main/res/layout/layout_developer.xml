@@ -5,15 +5,24 @@
     android:layout_height="match_parent"
     android:background="#075"
     android:orientation="vertical"
-    tools:context=".ExampleActivity">
+    tools:context=".DeveloperActivity">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:background="#781D1D"
         android:gravity="center"
-        android:text="example"
+        android:padding="10dp"
+        android:text="Milegema : developer mode"
         android:textColor="#eee"
         android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/button_unlock"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="unlock" />
 
 </LinearLayout>

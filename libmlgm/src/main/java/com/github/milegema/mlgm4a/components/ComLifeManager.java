@@ -18,6 +18,17 @@ public class ComLifeManager {
         if (life == null) {
             return;
         }
+        if (this.context.isCreated()) {
+            // invoke onCreate directly
+            ComLife.OnCreate on_create_func = life.getOnCreate();
+            if (on_create_func != null) {
+                try {
+                    on_create_func.invoke();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
         context.lives.add(life);
     }
 

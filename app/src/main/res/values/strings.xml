@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">密了个码</string>
+    <string name="app_name">MLGM(A)</string>
+    <string name="mlgm_ime">MLGM 输入法</string>
+    <string name="mlgm_ime_settings">MLGM 输入法设置 </string>
 </resources>

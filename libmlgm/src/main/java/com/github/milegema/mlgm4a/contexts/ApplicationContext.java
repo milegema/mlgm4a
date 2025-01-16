@@ -12,4 +12,6 @@ public interface ApplicationContext {
 
     ComponentManager components();
 
+    String profile();
+
 }

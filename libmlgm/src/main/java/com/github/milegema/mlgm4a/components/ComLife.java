@@ -4,6 +4,7 @@ package com.github.milegema.mlgm4a.components;
 public class ComLife {
 
     private int order; // 先后顺序:从小到大
+
     private OnCreate onCreate;
     private OnStart onStart;
 

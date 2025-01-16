@@ -15,9 +15,25 @@ public final class ComponentSetBuilder {
     }
 
 
-    public ComponentHolderBuilder addComponent(Object inst) {
+    public ComponentHolderBuilder addComponentInstance(Object inst) {
         ComponentHolderBuilder b = new ComponentHolderBuilder();
         b.init(inst);
+        this.list.add(b);
+        return b;
+    }
+
+    public ComponentHolderBuilder addComponentFactory(ComponentFactory factory) {
+        ComponentHolderBuilder b = new ComponentHolderBuilder();
+        b.setFactory(factory);
+        this.list.add(b);
+        return b;
+    }
+
+    public ComponentHolderBuilder addComponentProvider(ComponentProvider provider) {
+        ComponentHolderBuilder b = new ComponentHolderBuilder();
+        b.setFactory(provider);
+        b.setWirer(provider);
+        b.setId(provider.getDefaultID());
         this.list.add(b);
         return b;
     }

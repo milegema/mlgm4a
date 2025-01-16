@@ -4,4 +4,6 @@ public interface Table {
 
     TableName name();
 
+    Schema owner();
+
 }

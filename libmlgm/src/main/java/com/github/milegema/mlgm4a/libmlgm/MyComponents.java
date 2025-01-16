@@ -1,0 +1,50 @@
+package com.github.milegema.mlgm4a.libmlgm;
+
+import com.github.milegema.mlgm4a.components.ComponentHolderBuilder;
+import com.github.milegema.mlgm4a.components.ComponentProviderT;
+import com.github.milegema.mlgm4a.components.ComponentSetBuilder;
+import com.github.milegema.mlgm4a.configurations.Configuration;
+import com.github.milegema.mlgm4a.data.properties.PropertyGetter;
+import com.github.milegema.mlgm4a.data.properties.PropertyTable;
+import com.github.milegema.mlgm4a.network.web.WebClient;
+import com.github.milegema.mlgm4a.network.web.WebClientFacade;
+
+final class MyComponents {
+
+    public static void config_all(Configuration configuration) {
+        final ComponentSetBuilder csb = configuration.getComponentSetBuilder();
+        config_example(csb);
+        config_web_client(csb);
+    }
+
+    static void config_web_client(ComponentSetBuilder csb) {
+        ComponentProviderT<WebClientFacade> provider = new ComponentProviderT<>();
+        provider.setFactory(WebClientFacade::new);
+        provider.setWirer((ac, holder, inst) -> {
+            inst.setApplicationContext(ac);
+        });
+        ComponentHolderBuilder builder = csb.addComponentProvider(provider);
+        builder.addAlias(WebClient.class);
+    }
+
+    static void config_example(ComponentSetBuilder csb) {
+        ComponentProviderT<MyExampleCom> provider = new ComponentProviderT<>();
+        provider.setFactory(MyExampleCom::new);
+        provider.setWirer((ac, holder, inst) -> {
+
+            PropertyTable pt = ac.properties();
+            PropertyGetter getter = new PropertyGetter(pt);
+            int limit = getter.getInt("com.example.limit", 0);
+            String label = getter.getString("com.example.label", "");
+            WebClient web_client = ac.components().find(WebClient.class);
+
+            inst.setApplicationContext(ac);
+            inst.setAttrLabel(label);
+            inst.setAttrLimit(limit);
+            inst.setClient(web_client);
+        });
+        ComponentHolderBuilder builder = csb.addComponentProvider(provider);
+        builder.addAlias(MyExampleCom.class);
+    }
+
+}

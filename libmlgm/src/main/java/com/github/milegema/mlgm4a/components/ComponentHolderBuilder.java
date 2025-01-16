@@ -9,10 +9,28 @@ public final class ComponentHolderBuilder {
     private String id;
     private List<String> classes;
     private List<String> aliases;
+    private ComponentFactory factory;
+    private ComponentWirer wirer;
 
     public ComponentHolderBuilder() {
         this.aliases = new ArrayList<>();
         this.classes = new ArrayList<>();
+    }
+
+    public ComponentFactory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(ComponentFactory factory) {
+        this.factory = factory;
+    }
+
+    public ComponentWirer getWirer() {
+        return wirer;
+    }
+
+    public void setWirer(ComponentWirer wirer) {
+        this.wirer = wirer;
     }
 
     public ComponentHolderBuilder addClass(String cl) {
@@ -74,6 +92,8 @@ public final class ComponentHolderBuilder {
         holder.setInstance(this.instance);
         holder.setAliases(toArray(this.aliases));
         holder.setClasses(toArray(this.classes));
+        holder.setWirer(this.wirer);
+        holder.setFactory(this.factory);
         return holder;
     }
 
@@ -121,4 +141,5 @@ public final class ComponentHolderBuilder {
     public void setInstance(Object instance) {
         this.instance = instance;
     }
+
 }

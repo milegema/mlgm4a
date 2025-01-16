@@ -5,6 +5,14 @@ public final class Names {
     private Names() {
     }
 
+    // application
+
+    public final static String application_profiles_active = "application.profiles.active";
+    public final static String application_1_properties = "application-1.properties";
+    public final static String application_2_properties = "application-2.properties";
+    public final static String application_3_properties = "application-3.properties";
+
+
     // block-meta
 
     public final static String block_meta_id = "id"; //

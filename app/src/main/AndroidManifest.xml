@@ -28,7 +28,7 @@
         </activity>
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".AppSettingsActivity"
             android:label="@string/mlgm_ime_settings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

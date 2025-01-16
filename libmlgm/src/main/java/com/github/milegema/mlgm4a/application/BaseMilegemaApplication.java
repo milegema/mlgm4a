@@ -2,10 +2,13 @@ package com.github.milegema.mlgm4a.application;
 
 import android.app.Application;
 
+import com.github.milegema.mlgm4a.configurations.Configuration;
+import com.github.milegema.mlgm4a.configurations.Customizer;
+import com.github.milegema.mlgm4a.libmlgm.LibMlgmCustomizer;
 import com.github.milegema.mlgm4a.contexts.ContextHolder;
 import com.github.milegema.mlgm4a.logs.AndroidLogger;
 
-public class BaseMilegemaApplication extends Application implements MLGM {
+public class BaseMilegemaApplication extends Application implements MLGM, Customizer {
 
     private ContextHolder mContextHolder;
 
@@ -25,5 +28,11 @@ public class BaseMilegemaApplication extends Application implements MLGM {
     public void onCreate() {
         super.onCreate();
         AndroidLogger.init();
+    }
+
+
+    @Override
+    public void customize(Configuration configuration) {
+        (new LibMlgmCustomizer()).customize(configuration);
     }
 }

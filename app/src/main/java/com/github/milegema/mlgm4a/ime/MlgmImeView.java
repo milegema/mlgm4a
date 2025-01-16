@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.github.milegema.mlgm4a.SettingsActivity;
+import com.github.milegema.mlgm4a.AppSettingsActivity;
 import com.github.milegema.mlgm4a.R;
 import com.github.milegema.mlgm4a.logs.Logs;
 
@@ -91,7 +91,7 @@ public class MlgmImeView extends LinearLayout {
 
     private void showSettingsUI() {
         Context ctx = this.getContext();
-        Intent i = new Intent(ctx, SettingsActivity.class);
+        Intent i = new Intent(ctx, AppSettingsActivity.class);
         ctx.startActivity(i);
     }
 

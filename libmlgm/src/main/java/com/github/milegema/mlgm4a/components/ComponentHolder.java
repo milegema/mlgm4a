@@ -7,7 +7,27 @@ public class ComponentHolder {
     private String[] classes;
     private String[] aliases;
 
+
+    private ComponentFactory factory;
+    private ComponentWirer wirer;
+
     public ComponentHolder() {
+    }
+
+    public ComponentFactory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(ComponentFactory factory) {
+        this.factory = factory;
+    }
+
+    public ComponentWirer getWirer() {
+        return wirer;
+    }
+
+    public void setWirer(ComponentWirer wirer) {
+        this.wirer = wirer;
     }
 
     public String[] getAliases() {

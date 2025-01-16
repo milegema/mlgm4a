@@ -5,6 +5,6 @@ import com.github.milegema.mlgm4a.data.ids.Alias;
 public class TableName extends Alias {
 
     public TableName(String a) {
-        super(a);
+        super(TableUtils.normalizeName(a));
     }
 }

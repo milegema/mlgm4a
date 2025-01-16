@@ -5,10 +5,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.github.milegema.mlgm4a.application.BaseMilegemaActivity;
+import com.github.milegema.mlgm4a.application.MilegemaUserActivity;
 import com.github.milegema.mlgm4a.logs.Logs;
 import com.github.milegema.mlgm4a.ui.views.UnlockGraphView;
 
-public class UnlockActivity extends BaseMilegemaActivity {
+public class UnlockActivity extends MilegemaUserActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -5,8 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.github.milegema.mlgm4a.application.BaseMilegemaActivity;
+import com.github.milegema.mlgm4a.application.MilegemaAppActivity;
 
-public class ExampleActivity extends BaseMilegemaActivity {
+public class ExampleActivity extends MilegemaAppActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

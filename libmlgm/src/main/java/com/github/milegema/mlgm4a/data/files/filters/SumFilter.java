@@ -22,6 +22,7 @@ import com.github.milegema.mlgm4a.data.properties.PropertySetter;
 import com.github.milegema.mlgm4a.data.properties.PropertyTable;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.security.hash.Hash;
+import com.github.milegema.mlgm4a.security.hash.HashUtils;
 import com.github.milegema.mlgm4a.utils.ByteSlice;
 import com.github.milegema.mlgm4a.utils.Hex;
 
@@ -65,7 +66,7 @@ public class SumFilter implements FileAccessFilterRegistry, FileAccessFilter {
         final SumLayer current = block.getSumLayer();
 
         final byte[] sum_want = pGetter.getDataAuto(Names.block_sha256sum, new byte[0]);
-        final byte[] sum_have = Hash.sum(body, HASH_ALGORITHM);
+        final byte[] sum_have = HashUtils.sum(body, HASH_ALGORITHM);
         final BlockID block_id = new BlockID(sum_have);
 
         // verify hash
@@ -98,7 +99,7 @@ public class SumFilter implements FileAccessFilterRegistry, FileAccessFilter {
 
         if (op.hash) {
             // hash
-            byte[] sum = Hash.sum(body, HASH_ALGORITHM);
+            byte[] sum = HashUtils.sum(body, HASH_ALGORITHM);
             pSetter.put(Names.block_sha256sum, sum);
             id = new BlockID(sum);
         }

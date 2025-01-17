@@ -5,6 +5,7 @@ import android.security.keystore.KeyProperties;
 
 import com.github.milegema.mlgm4a.errors.Errors;
 import com.github.milegema.mlgm4a.security.hash.Hash;
+import com.github.milegema.mlgm4a.security.hash.HashUtils;
 
 import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
@@ -171,7 +172,7 @@ public class KeyPairManagerImpl implements KeyPairManager {
     private static KeyFingerprint loadFingerprint(MyKeyHolder h) {
         PublicKey pub = h.fetch().getPublic();
         byte[] bin = pub.getEncoded();
-        byte[] sum = Hash.sum(bin, Hash.SHA256);
+        byte[] sum = HashUtils.sum(bin, Hash.SHA256);
         return new KeyFingerprint(sum);
     }
 

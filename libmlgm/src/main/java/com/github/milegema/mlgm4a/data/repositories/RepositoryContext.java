@@ -3,6 +3,7 @@ package com.github.milegema.mlgm4a.data.repositories;
 import com.github.milegema.mlgm4a.data.files.RepositoryFileContext;
 import com.github.milegema.mlgm4a.data.repositories.objects.Objects;
 import com.github.milegema.mlgm4a.data.repositories.refs.Refs;
+import com.github.milegema.mlgm4a.data.repositories.tables.DB;
 import com.github.milegema.mlgm4a.data.repositories.tables.TableManager;
 import com.github.milegema.mlgm4a.security.SecretKeyHolder;
 
@@ -27,7 +28,10 @@ public class RepositoryContext {
     private Repository repository;
     private Objects objects;
     private Refs refs;
+
     private TableManager tables;
+    private DB db;
+
 
     // keys
     private KeyPair keyPair;
@@ -93,6 +97,14 @@ public class RepositoryContext {
 
     public void setTables(TableManager tables) {
         this.tables = tables;
+    }
+
+    public DB getDb() {
+        return db;
+    }
+
+    public void setDb(DB db) {
+        this.db = db;
     }
 
     public Objects getObjects() {

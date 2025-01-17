@@ -7,28 +7,21 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.github.milegema.mlgm4a.logs.AndroidLogger;
 import com.github.milegema.mlgm4a.logs.Logs;
-import com.github.milegema.mlgm4a.security.CipherMode;
-import com.github.milegema.mlgm4a.security.CipherPadding;
 import com.github.milegema.mlgm4a.security.KeyFingerprint;
 import com.github.milegema.mlgm4a.security.KeyPairAlias;
 import com.github.milegema.mlgm4a.security.KeyPairHolder;
 import com.github.milegema.mlgm4a.security.KeyPairManager;
-import com.github.milegema.mlgm4a.security.SimpleCipher;
 import com.github.milegema.mlgm4a.security.SimpleSigner;
 import com.github.milegema.mlgm4a.security.SimpleVerifier;
-import com.github.milegema.mlgm4a.security.hash.Hash;
 import com.github.milegema.mlgm4a.utils.ByteSlice;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.KeyPair;
 import java.security.NoSuchAlgorithmException;
 import java.security.SignatureException;
-import java.util.Arrays;
 import java.util.Random;
 
 

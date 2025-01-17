@@ -11,4 +11,9 @@ public class DefaultTableManager implements TableManager {
     public TableHolder get(TableName name) {
         return null;
     }
+
+    @Override
+    public DB db() {
+        return null;
+    }
 }

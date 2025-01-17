@@ -12,6 +12,9 @@ public final class MlgmAppCustomizer implements Customizer {
 
     @Override
     public void customize(Configuration configuration) {
+
+        configuration.setProfile("debug");
+
         this.customize_props(configuration);
         this.customize_components(configuration);
     }
@@ -27,8 +30,6 @@ public final class MlgmAppCustomizer implements Customizer {
 
         List<PropertiesHolder> list = loader.loadAll();
         configuration.getProperties().addAll(list);
-
-        configuration.setProfile("release");
     }
 
     private void customize_components(Configuration configuration) {

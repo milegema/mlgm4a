@@ -56,9 +56,9 @@ public class MyExampleCom implements ComLifecycle {
         });
         cl.setOnStart(() -> {
             Logs.info(this + ".on_start()");
-            if (this.attrLimit > 0) {
-                throw new RuntimeException("this.attrLimit > 0");
-            }
+            // if (this.attrLimit > 0) {
+            // throw new RuntimeException("this.attrLimit > 0");
+            // }
         });
         cl.setOnResume(() -> {
             Logs.info(this + ".on_resume()");

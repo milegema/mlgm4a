@@ -4,6 +4,9 @@ import com.github.milegema.mlgm4a.security.AlgorithmManager;
 import com.github.milegema.mlgm4a.security.AlgorithmProvider;
 import com.github.milegema.mlgm4a.security.DefaultAlgorithmManager;
 import com.github.milegema.mlgm4a.security.aes.AesProvider;
+import com.github.milegema.mlgm4a.security.hash.MD5Provider;
+import com.github.milegema.mlgm4a.security.hash.SHA1Provider;
+import com.github.milegema.mlgm4a.security.hash.SHA256Provider;
 import com.github.milegema.mlgm4a.security.rsa.RsaProvider;
 
 import java.util.ArrayList;
@@ -18,6 +21,11 @@ public final class AlgorithmProviders {
         List<AlgorithmProvider> list = new ArrayList<>();
         list.add(new AesProvider());
         list.add(new RsaProvider());
+
+        list.add(new MD5Provider());
+        list.add(new SHA1Provider());
+        list.add(new SHA256Provider());
+
         return list.toArray(new AlgorithmProvider[0]);
     }
 

@@ -57,4 +57,10 @@ public class DefaultAlgorithmManager implements AlgorithmManager {
         AlgorithmProvider ap = this.findProvider(algorithm);
         return (SecretKeyProvider) ap;
     }
+
+    @Override
+    public HashProvider findHashProvider(String algorithm) {
+        AlgorithmProvider ap = this.findProvider(algorithm);
+        return (HashProvider) ap;
+    }
 }

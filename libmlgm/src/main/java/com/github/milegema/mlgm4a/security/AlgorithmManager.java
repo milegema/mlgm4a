@@ -8,4 +8,6 @@ public interface AlgorithmManager {
 
     SecretKeyProvider findSecretKeyProvider(String algorithm);
 
+    HashProvider findHashProvider(String algorithm);
+
 }

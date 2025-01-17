@@ -9,7 +9,7 @@ import com.github.milegema.mlgm4a.data.properties.PropertyTable;
 import com.github.milegema.mlgm4a.network.web.WebClient;
 import com.github.milegema.mlgm4a.network.web.WebClientFacade;
 
-final class MyComponents {
+final class ConfigComponents {
 
     public static void config_all(Configuration configuration) {
         final ComponentSetBuilder csb = configuration.getComponentSetBuilder();

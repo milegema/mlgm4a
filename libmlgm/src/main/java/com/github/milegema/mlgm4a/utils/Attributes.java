@@ -5,6 +5,7 @@ import android.util.NoSuchPropertyException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Attributes {
 
@@ -20,6 +21,11 @@ public class Attributes {
             tmp.putAll(src.table);
         }
         this.table = Collections.synchronizedMap(tmp);
+    }
+
+    public String[] names() {
+        Set<String> ids = this.table.keySet();
+        return ids.toArray(new String[0]);
     }
 
     public void set(String name, Object value) {

@@ -1,14 +1,9 @@
 package com.github.milegema.mlgm4a.libmlgm;
 
-import com.github.milegema.mlgm4a.components.ComponentHolderBuilder;
-import com.github.milegema.mlgm4a.components.ComponentProviderT;
-import com.github.milegema.mlgm4a.components.ComponentSetBuilder;
 import com.github.milegema.mlgm4a.configurations.ApplicationPropertiesLoader;
 import com.github.milegema.mlgm4a.configurations.Configuration;
 import com.github.milegema.mlgm4a.configurations.Customizer;
 import com.github.milegema.mlgm4a.configurations.PropertiesHolder;
-import com.github.milegema.mlgm4a.network.web.WebClient;
-import com.github.milegema.mlgm4a.network.web.WebClientFacade;
 
 import java.util.List;
 
@@ -19,7 +14,9 @@ public final class LibMlgmCustomizer implements Customizer {
 
     @Override
     public void customize(Configuration configuration) {
+        this.customize_banner(configuration);
         this.customize_props(configuration);
+        this.customize_attrs(configuration);
         this.customize_components(configuration);
     }
 
@@ -36,6 +33,26 @@ public final class LibMlgmCustomizer implements Customizer {
     }
 
     private void customize_components(Configuration configuration) {
-        MyComponents.config_all(configuration);
+        ConfigComponents.config_all(configuration);
+    }
+
+    private void customize_attrs(Configuration configuration) {
+        Object bar = new MyExampleCom();
+        configuration.getAttributes().set("foo", bar);
+    }
+
+    private void customize_banner(Configuration configuration) {
+        final char nl = '\n';
+        final StringBuilder bb = new StringBuilder();
+        bb.append("============================================").append(nl);
+        bb.append("        _ _                                 ").append(nl);
+        bb.append("  /\\/\\ (_) | ___  __ _  ___ _ __ ___   __ _ ").append(nl);
+        bb.append(" /    \\| | |/ _ \\/ _` |/ _ \\ '_ ` _ \\ / _` |").append(nl);
+        bb.append("/ /\\/\\ \\ | |  __/ (_| |  __/ | | | | | (_| |").append(nl);
+        bb.append("\\/    \\/_|_|\\___|\\__, |\\___|_| |_| |_|\\__,_|").append(nl);
+        bb.append("                 |___/                      ").append(nl);
+        bb.append("Milegame Android Application").append(nl);
+        bb.append("============================================").append(nl);
+        configuration.setBannerText(bb.toString());
     }
 }

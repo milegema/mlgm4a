@@ -4,4 +4,6 @@ public interface Schema {
 
     SchemaName name();
 
+    Table getTable(TableName name);
+
 }

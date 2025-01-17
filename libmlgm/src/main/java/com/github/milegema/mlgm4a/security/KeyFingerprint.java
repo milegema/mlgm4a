@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.github.milegema.mlgm4a.security.hash.Hash;
+import com.github.milegema.mlgm4a.security.hash.HashUtils;
 import com.github.milegema.mlgm4a.security.hash.SHA256SUM;
 
 import java.security.PublicKey;
@@ -49,7 +50,7 @@ public final class KeyFingerprint {
 
     public static KeyFingerprint compute(PublicKey pk) {
         byte[] data = pk.getEncoded();
-        byte[] sum = Hash.sum(data, Hash.SHA256);
+        byte[] sum = HashUtils.sum(data, Hash.SHA256);
         return new KeyFingerprint(sum);
     }
 

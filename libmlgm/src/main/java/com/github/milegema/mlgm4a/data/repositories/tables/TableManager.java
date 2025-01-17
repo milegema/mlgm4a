@@ -4,4 +4,6 @@ public interface TableManager {
 
     TableHolder get(TableName name);
 
+    DB db();
+
 }

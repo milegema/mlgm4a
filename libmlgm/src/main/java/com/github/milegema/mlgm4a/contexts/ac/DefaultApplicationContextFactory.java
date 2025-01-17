@@ -19,6 +19,7 @@ import com.github.milegema.mlgm4a.contexts.ApplicationContext;
 import com.github.milegema.mlgm4a.data.properties.Names;
 import com.github.milegema.mlgm4a.data.properties.PropertyTable;
 import com.github.milegema.mlgm4a.logs.Logs;
+import com.github.milegema.mlgm4a.utils.Attributes;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,6 +42,7 @@ public final class DefaultApplicationContextFactory implements ApplicationContex
         // steps
         steps.add(this::step_init);
         steps.add(this::step_customize);
+        steps.add(this::step_log_banner);
 
         steps.add(this::step_load_properties); // load first time
         steps.add(this::step_load_profile);
@@ -51,6 +53,8 @@ public final class DefaultApplicationContextFactory implements ApplicationContex
         steps.add(this::step_apply_components_lifecycle);
 
         steps.add(this::step_log_properties);
+        steps.add(this::step_log_attributes);
+        steps.add(this::step_log_components);
         steps.add(this::step_log_profile);
         steps.add(this::step_log_done);
 
@@ -156,14 +160,52 @@ public final class DefaultApplicationContextFactory implements ApplicationContex
         final String nl = "\n";
         PropertyTable props = inner.getProperties();
         StringBuilder buffer = new StringBuilder();
-        buffer.append("Properties:").append(nl);
         String[] names = props.names();
         Arrays.sort(names);
+        buffer.append("<properties>").append(nl);
         for (String name : names) {
             String value = props.get(name);
             buffer.append("\t").append(name).append(" = ").append(value).append(nl);
         }
-        buffer.append("[End of Properties]").append(nl);
+        buffer.append("</properties>").append(nl);
+        Logs.info(buffer.toString());
+    }
+
+    private void step_log_banner(ApplicationContextInner inner) {
+        String text = inner.getConfiguration().getBannerText();
+        Logs.info(text);
+    }
+
+    private void step_log_attributes(ApplicationContextInner inner) {
+        final String nl = "\n";
+        ApplicationContext ac = inner.getFacade();
+        Attributes attrs = ac.attributes();
+        StringBuilder buffer = new StringBuilder();
+        String[] names = attrs.names();
+        Arrays.sort(names);
+        buffer.append("<attributes>").append(nl);
+        for (String name : names) {
+            Object item = attrs.get(name);
+            buffer.append('\t').append(name).append(" = ").append(item).append(nl);
+        }
+        buffer.append("</attributes>").append(nl);
+        Logs.info(buffer.toString());
+    }
+
+    private void step_log_components(ApplicationContextInner inner) {
+        final String nl = "\n";
+        ApplicationContext ac = inner.getFacade();
+        ComponentManager cm = ac.components();
+        StringBuilder buffer = new StringBuilder();
+        String[] ids = cm.listIds();
+        Arrays.sort(ids);
+        buffer.append("<components>").append(nl);
+        for (String id : ids) {
+            ComponentHolder holder = cm.getHolder("#" + id);
+            Object inst = holder.getInstance();
+            buffer.append('\t').append(id).append(" = ").append(inst).append(nl);
+        }
+        buffer.append("</components>").append(nl);
         Logs.info(buffer.toString());
     }
 

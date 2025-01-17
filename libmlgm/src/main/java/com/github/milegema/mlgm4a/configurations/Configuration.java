@@ -18,6 +18,7 @@ public class Configuration {
     private List<PropertiesHolder> properties;
     private List<Customizer> customizers;
     private Context android;
+    private String bannerText; // text content of banner
 
     private ComponentSetBuilder componentSetBuilder;
     // private List<ComponentHolder> components;
@@ -87,6 +88,14 @@ public class Configuration {
 
     public void setComponentSetBuilder(ComponentSetBuilder componentSetBuilder) {
         this.componentSetBuilder = componentSetBuilder;
+    }
+
+    public String getBannerText() {
+        return bannerText;
+    }
+
+    public void setBannerText(String bannerText) {
+        this.bannerText = bannerText;
     }
 
     public Context getAndroid() {

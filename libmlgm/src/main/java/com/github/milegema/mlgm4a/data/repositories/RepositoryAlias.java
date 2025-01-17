@@ -4,6 +4,7 @@ import com.github.milegema.mlgm4a.data.ids.Alias;
 import com.github.milegema.mlgm4a.security.KeyFingerprint;
 import com.github.milegema.mlgm4a.security.KeyPairHolder;
 import com.github.milegema.mlgm4a.security.hash.Hash;
+import com.github.milegema.mlgm4a.security.hash.HashUtils;
 import com.github.milegema.mlgm4a.utils.Hex;
 
 import java.security.KeyPair;
@@ -17,7 +18,7 @@ public class RepositoryAlias extends Alias {
 
     public static RepositoryAlias getAlias(PublicKey pk) {
         byte[] encoded = pk.getEncoded();
-        byte[] sum = Hash.sum(encoded, Hash.SHA256);
+        byte[] sum = HashUtils.sum(encoded, Hash.SHA256);
         return inner_get_alias(sum);
     }
 

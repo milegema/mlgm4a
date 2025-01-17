@@ -3,6 +3,7 @@ package com.github.milegema.mlgm4a.data.repositories.objects;
 import com.github.milegema.mlgm4a.data.repositories.RepositoryException;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.security.hash.Hash;
+import com.github.milegema.mlgm4a.security.hash.HashUtils;
 import com.github.milegema.mlgm4a.utils.ByteSlice;
 import com.github.milegema.mlgm4a.utils.Hex;
 
@@ -43,7 +44,7 @@ public class EncodedObject {
             throw new RepositoryException("object data (encoded) is null");
         }
         byte[] sum_want = this.id.toByteArray();
-        byte[] sum_have = Hash.sum(this.encoded, Hash.SHA256);
+        byte[] sum_have = HashUtils.sum(this.encoded, Hash.SHA256);
         if (!Arrays.equals(sum_want, sum_have)) {
             String want = Hex.stringify(sum_want);
             String have = Hex.stringify(sum_have);

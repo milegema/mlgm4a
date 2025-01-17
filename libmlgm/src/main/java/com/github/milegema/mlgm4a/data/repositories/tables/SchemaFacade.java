@@ -12,4 +12,10 @@ public class SchemaFacade implements Schema {
     public SchemaName name() {
         return this.context.getName();
     }
+
+    @Override
+    public Table getTable(TableName name) {
+        SchemaTablesCache cache = this.context.getTableCache();
+        return cache.find(name, true);
+    }
 }

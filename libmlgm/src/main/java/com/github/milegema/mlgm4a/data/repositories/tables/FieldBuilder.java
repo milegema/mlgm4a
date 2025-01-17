@@ -9,7 +9,7 @@ public class FieldBuilder {
     }
 
     public void reset() {
-        this.context = new FieldContext(new FieldName("undefined"), null);
+        this.context = new FieldContext();
     }
 
     public FieldBuilder setOwnerTable(Table owner) {
@@ -47,7 +47,7 @@ public class FieldBuilder {
     }
 
     public Field create() {
-        FieldContext ctx = this.context;
+        FieldContext ctx = new FieldContext(this.context);
         this.reset();
         return ctx.getFacade();
     }

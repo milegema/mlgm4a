@@ -8,16 +8,13 @@ public class TableContext {
     private TableName name;
     private Schema owner;
     private Field[] fields; // children
-    private Field primary; // primary-key
-
+    private FieldName primary; // primary-key
     private Class<?> entityClass;
     private EntityAdapter entityAdapter;
 
-    public TableContext(TableName _name, Schema _owner) {
+    public TableContext() {
         this.facade = new TableFacade(this);
         this.fieldCache = new TableFieldsCache(this);
-        this.name = _name;
-        this.owner = _owner;
     }
 
     public TableContext(TableContext src) {
@@ -25,6 +22,9 @@ public class TableContext {
             this.name = src.name;
             this.owner = src.owner;
             this.fields = src.fields;
+            this.primary = src.primary;
+            this.entityAdapter = src.entityAdapter;
+            this.entityClass = src.entityClass;
         }
         this.facade = new TableFacade(this);
         this.fieldCache = new TableFieldsCache(this);
@@ -55,11 +55,11 @@ public class TableContext {
         return fieldCache;
     }
 
-    public Field getPrimary() {
+    public FieldName getPrimary() {
         return primary;
     }
 
-    public void setPrimary(Field primary) {
+    public void setPrimary(FieldName primary) {
         this.primary = primary;
     }
 
@@ -69,5 +69,21 @@ public class TableContext {
 
     public void setFields(Field[] fields) {
         this.fields = fields;
+    }
+
+    public Class<?> getEntityClass() {
+        return entityClass;
+    }
+
+    public void setEntityClass(Class<?> entityClass) {
+        this.entityClass = entityClass;
+    }
+
+    public EntityAdapter getEntityAdapter() {
+        return entityAdapter;
+    }
+
+    public void setEntityAdapter(EntityAdapter entityAdapter) {
+        this.entityAdapter = entityAdapter;
     }
 }

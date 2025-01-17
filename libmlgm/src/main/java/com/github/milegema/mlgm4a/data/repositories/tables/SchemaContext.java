@@ -11,15 +11,15 @@ public class SchemaContext {
     private SchemaName name;
     private Table[] tables; // children
 
-    public SchemaContext(SchemaName _name) {
+    public SchemaContext() {
         this.facade = new SchemaFacade(this);
         this.tableCache = new SchemaTablesCache(this);
-        this.name = _name;
     }
 
     public SchemaContext(SchemaContext src) {
         if (src != null) {
             this.name = src.name;
+            this.tables = src.tables;
         }
         this.facade = new SchemaFacade(this);
         this.tableCache = new SchemaTablesCache(this);

@@ -8,9 +8,8 @@ public enum FieldType {
 
     INT8, INT16, INT32, INT64,
 
-    TIMESTAMP,
+    TIMESTAMP, UUID, USER_ID, GROUP_ID, URL,
 
     HEX, BASE64,
-
 
 }

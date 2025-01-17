@@ -58,7 +58,7 @@ public class SimpleTableTest {
         builder.addField(fb.create());
 
         // done
-        builder.setPrimaryKey(pk);
+        builder.addPrimaryKey(pk);
         return builder.create();
     }
 
@@ -88,7 +88,7 @@ public class SimpleTableTest {
         builder.addField(fb.create());
 
         // done
-        builder.setPrimaryKey(pk);
+        builder.addPrimaryKey(pk);
         return builder.create();
     }
 }

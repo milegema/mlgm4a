@@ -3,18 +3,16 @@ package com.github.milegema.mlgm4a.data.repositories.tables;
 public class FieldContext {
 
     private final Field facade;
+
     private FieldName name;
     private Table owner;
     private FieldType type;
-
     private boolean unique;
     private boolean nullable;
 
 
-    public FieldContext(FieldName _name, Table _owner) {
+    public FieldContext() {
         this.facade = new FieldFacade(this);
-        this.name = _name;
-        this.owner = _owner;
     }
 
     public FieldContext(FieldContext src) {
@@ -23,7 +21,10 @@ public class FieldContext {
             return;
         }
         this.name = src.name;
+        this.type = src.type;
         this.owner = src.owner;
+        this.unique = src.unique;
+        this.nullable = src.nullable;
     }
 
     public Field getFacade() {

@@ -17,4 +17,25 @@ public class TableFacade implements Table {
     public Schema owner() {
         return this.context.getOwner();
     }
+
+    @Override
+    public Field primaryKey() {
+        FieldName name = this.context.getPrimary();
+        return this.context.getFieldCache().find(name, true);
+    }
+
+    @Override
+    public IdentityGenerator getIdentityGenerator() {
+        return context.getIdentityGenerator();
+    }
+
+    @Override
+    public EntityAdapter getEntityAdapter() {
+        return context.getEntityAdapter();
+    }
+
+    @Override
+    public Class<?> getEntityClass() {
+        return context.getEntityClass();
+    }
 }

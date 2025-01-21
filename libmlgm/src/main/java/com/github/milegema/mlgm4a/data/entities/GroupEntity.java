@@ -1,32 +1,32 @@
 package com.github.milegema.mlgm4a.data.entities;
 
-import com.github.milegema.mlgm4a.data.ids.DomainID;
+import com.github.milegema.mlgm4a.data.ids.GroupID;
 import com.github.milegema.mlgm4a.data.ids.LongID;
 
-public class DomainEntity extends BaseEntity {
+public class GroupEntity extends BaseEntity {
 
+    private GroupID id;
 
-    private DomainID id;
-
-    public DomainEntity() {
+    public GroupEntity() {
     }
 
-    public DomainID getId() {
+
+    public GroupID getId() {
         return id;
     }
 
-    public void setId(DomainID id) {
+    public void setId(GroupID id) {
         this.id = id;
     }
 
     @Override
     public void setLongID(long id) {
-        this.id = new DomainID(id);
+        this.id = new GroupID(id);
     }
 
     @Override
     public long getLongID() {
-        DomainID tmp = this.id;
+        GroupID tmp = this.id;
         if (tmp == null) {
             return 0;
         }

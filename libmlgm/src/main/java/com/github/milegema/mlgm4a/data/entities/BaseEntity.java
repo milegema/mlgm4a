@@ -1,19 +1,20 @@
 package com.github.milegema.mlgm4a.data.entities;
 
+import com.github.milegema.mlgm4a.data.ids.EntityWithLongID;
 import com.github.milegema.mlgm4a.data.ids.GroupID;
 import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.data.ids.UserID;
 import com.github.milegema.mlgm4a.utils.Time;
 
-public class BaseEntity {
+public abstract class BaseEntity implements EntityWithLongID {
 
     private UUID uuid;
     private UserID owner;
     private UserID creator;
     private UserID committer;
     private GroupID group;
-    private Time updatedAt;
     private Time createdAt;
+    private Time updatedAt;
     private Time deletedAt;
 
     public BaseEntity() {
@@ -82,4 +83,5 @@ public class BaseEntity {
     public void setDeletedAt(Time deletedAt) {
         this.deletedAt = deletedAt;
     }
+
 }

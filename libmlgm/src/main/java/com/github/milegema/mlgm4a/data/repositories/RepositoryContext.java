@@ -3,7 +3,7 @@ package com.github.milegema.mlgm4a.data.repositories;
 import com.github.milegema.mlgm4a.data.files.RepositoryFileContext;
 import com.github.milegema.mlgm4a.data.repositories.objects.Objects;
 import com.github.milegema.mlgm4a.data.repositories.refs.Refs;
-import com.github.milegema.mlgm4a.data.repositories.tables.DB;
+import com.github.milegema.mlgm4a.data.repositories.tables.DatabaseContext;
 import com.github.milegema.mlgm4a.data.repositories.tables.TableManager;
 import com.github.milegema.mlgm4a.security.SecretKeyHolder;
 
@@ -18,6 +18,7 @@ public class RepositoryContext {
     private RepositoryAlias alias;
     private RepositoryLayout layout;
     private RepositoryHolder holder;
+    private RepositoryFactory factory;
     private RepositoryFileContext rfc;
     private Path location; // location of repository folder '.milegema'
     private int formatVersion;
@@ -29,8 +30,9 @@ public class RepositoryContext {
     private Objects objects;
     private Refs refs;
 
+    // database
+    private DatabaseContext databaseContext;
     private TableManager tables;
-    private DB db;
 
 
     // keys
@@ -53,6 +55,7 @@ public class RepositoryContext {
         this.layout = ctx.layout;
         this.location = ctx.location;
         this.holder = ctx.holder;
+        this.factory = ctx.factory;
         this.rfc = ctx.rfc;
         this.formatVersion = ctx.formatVersion;
 
@@ -99,12 +102,12 @@ public class RepositoryContext {
         this.tables = tables;
     }
 
-    public DB getDb() {
-        return db;
+    public DatabaseContext getDatabaseContext() {
+        return databaseContext;
     }
 
-    public void setDb(DB db) {
-        this.db = db;
+    public void setDatabaseContext(DatabaseContext databaseContext) {
+        this.databaseContext = databaseContext;
     }
 
     public Objects getObjects() {
@@ -145,6 +148,14 @@ public class RepositoryContext {
 
     public void setRfc(RepositoryFileContext rfc) {
         this.rfc = rfc;
+    }
+
+    public RepositoryFactory getFactory() {
+        return factory;
+    }
+
+    public void setFactory(RepositoryFactory factory) {
+        this.factory = factory;
     }
 
     public SecretKeyHolder getSecretKeyHolder() {

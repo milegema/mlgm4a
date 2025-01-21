@@ -2,6 +2,8 @@ package com.github.milegema.mlgm4a.data.properties;
 
 
 import com.github.milegema.mlgm4a.data.files.FileAccessLayerClass;
+import com.github.milegema.mlgm4a.data.ids.LongID;
+import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
@@ -10,6 +12,7 @@ import com.github.milegema.mlgm4a.security.CipherPadding;
 import com.github.milegema.mlgm4a.security.hash.Sum;
 import com.github.milegema.mlgm4a.utils.Base64;
 import com.github.milegema.mlgm4a.utils.Hex;
+import com.github.milegema.mlgm4a.utils.Time;
 
 public class PropertySetter {
 
@@ -110,6 +113,20 @@ public class PropertySetter {
     }
 
 
+    public void put(String name, LongID id) {
+        if (id == null) {
+            return;
+        }
+        innerSet(name, String.valueOf(id));
+    }
+
+    public void put(String name, UUID uuid) {
+        if (uuid == null) {
+            return;
+        }
+        innerSet(name, String.valueOf(uuid));
+    }
+
     public void put(String name, FileAccessLayerClass value) {
         if (value == null) {
             value = FileAccessLayerClass.UNKNOWN;
@@ -131,4 +148,13 @@ public class PropertySetter {
         }
         innerSet(name, value.name());
     }
+
+    public void put(String name, Time value) {
+        if (value == null) {
+            return;
+        }
+        long ms = value.milliseconds();
+        innerSet(name, String.valueOf(ms));
+    }
+
 }

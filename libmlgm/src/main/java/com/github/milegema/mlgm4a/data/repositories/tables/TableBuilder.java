@@ -48,6 +48,7 @@ public class TableBuilder {
     public void reset() {
         this.context = new TableContext();
         this.mFieldInfoList = new ArrayList<>();
+        this.context.setIdentityGenerator(new DefaultIdentityGenerator());
     }
 
     public TableBuilder setOwnerSchema(Schema owner) {
@@ -62,6 +63,11 @@ public class TableBuilder {
 
     public TableBuilder setEntityInfo(EntityAdapter adapter) {
         this.context.setEntityAdapter(adapter);
+        return this;
+    }
+
+    public TableBuilder setEntityInfo(IdentityGenerator idg) {
+        this.context.setIdentityGenerator(idg);
         return this;
     }
 

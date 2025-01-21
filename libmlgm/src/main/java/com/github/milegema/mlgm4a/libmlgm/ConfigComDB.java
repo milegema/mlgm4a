@@ -10,6 +10,7 @@ import com.github.milegema.mlgm4a.data.entities.UserEntity;
 import com.github.milegema.mlgm4a.data.entities.adapters.AccountEntityAdapter;
 import com.github.milegema.mlgm4a.data.entities.adapters.DomainEntityAdapter;
 import com.github.milegema.mlgm4a.data.entities.adapters.UserEntityAdapter;
+import com.github.milegema.mlgm4a.data.repositories.tables.DefaultIdentityGenerator;
 import com.github.milegema.mlgm4a.data.repositories.tables.Field;
 import com.github.milegema.mlgm4a.data.repositories.tables.FieldBuilder;
 import com.github.milegema.mlgm4a.data.repositories.tables.FieldType;
@@ -111,6 +112,7 @@ final class ConfigComDB {
 
             TableBuilder table_builder = schema_builder.addTable("users");
             table_builder.setEntityInfo(UserEntity.class, new UserEntityAdapter());
+            table_builder.setEntityInfo(new DefaultIdentityGenerator());
 
             table_builder.addPrimaryKey("id", FieldType.INT);
             create_base_fields(table_builder);

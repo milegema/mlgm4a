@@ -3,6 +3,7 @@ package com.github.milegema.mlgm4a.data.properties;
 import android.util.NoSuchPropertyException;
 
 import com.github.milegema.mlgm4a.data.files.FileAccessLayerClass;
+import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
@@ -11,6 +12,7 @@ import com.github.milegema.mlgm4a.security.CipherMode;
 import com.github.milegema.mlgm4a.security.CipherPadding;
 import com.github.milegema.mlgm4a.utils.Base64;
 import com.github.milegema.mlgm4a.utils.Hex;
+import com.github.milegema.mlgm4a.utils.Time;
 
 
 public class PropertyGetter {
@@ -241,4 +243,26 @@ public class PropertyGetter {
         }
         return def;
     }
+
+    public Time getTime(String name, Time def) {
+        String str = innerGet(name);
+        try {
+            long n = Long.parseLong(str);
+            return new Time(n);
+        } catch (Exception e) {
+            Errors.handle(null, e);
+        }
+        return def;
+    }
+
+    public UUID getUUID(String name, UUID def) {
+        String str = innerGet(name);
+        try {
+            return new UUID(str);
+        } catch (Exception e) {
+            Errors.handle(null, e);
+        }
+        return def;
+    }
+
 }

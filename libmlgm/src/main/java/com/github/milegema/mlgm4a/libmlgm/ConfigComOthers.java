@@ -4,6 +4,8 @@ import com.github.milegema.mlgm4a.components.ComponentHolderBuilder;
 import com.github.milegema.mlgm4a.components.ComponentProviderT;
 import com.github.milegema.mlgm4a.components.ComponentSetBuilder;
 import com.github.milegema.mlgm4a.configurations.Configuration;
+import com.github.milegema.mlgm4a.contexts.ContextAgent;
+import com.github.milegema.mlgm4a.contexts.ac.AndroidContextAgent;
 import com.github.milegema.mlgm4a.data.properties.PropertyGetter;
 import com.github.milegema.mlgm4a.data.properties.PropertyTable;
 import com.github.milegema.mlgm4a.network.web.WebClient;
@@ -14,7 +16,19 @@ final class ConfigComOthers {
     public static void config_all(Configuration configuration) {
         final ComponentSetBuilder csb = configuration.getComponentSetBuilder();
         config_example(csb);
+        config_context_agent(csb);
         config_web_client(csb);
+    }
+
+
+    static void config_context_agent(ComponentSetBuilder csb) {
+        ComponentProviderT<AndroidContextAgent> provider = new ComponentProviderT<>();
+        provider.setFactory(AndroidContextAgent::new);
+        provider.setWirer((ac, holder, inst) -> {
+            inst.setApplicationContext(ac);
+        });
+        ComponentHolderBuilder builder = csb.addComponentProvider(provider);
+        builder.addAlias(ContextAgent.class);
     }
 
     static void config_web_client(ComponentSetBuilder csb) {

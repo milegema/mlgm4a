@@ -11,6 +11,7 @@ public class TableContext {
     private FieldName primary; // primary-key
     private Class<?> entityClass;
     private EntityAdapter entityAdapter;
+    private IdentityGenerator identityGenerator;
 
     public TableContext() {
         this.facade = new TableFacade(this);
@@ -85,5 +86,14 @@ public class TableContext {
 
     public void setEntityAdapter(EntityAdapter entityAdapter) {
         this.entityAdapter = entityAdapter;
+    }
+
+
+    public IdentityGenerator getIdentityGenerator() {
+        return identityGenerator;
+    }
+
+    public void setIdentityGenerator(IdentityGenerator identityGenerator) {
+        this.identityGenerator = identityGenerator;
     }
 }

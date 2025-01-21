@@ -1,7 +1,5 @@
 package com.github.milegema.mlgm4a.data.repositories;
 
-import android.content.Context;
-
 import com.github.milegema.mlgm4a.data.files.FileAccessFilterChain;
 import com.github.milegema.mlgm4a.data.files.filters.DefaultFilterChainFactory;
 import com.github.milegema.mlgm4a.data.files.RepositoryFileContext;
@@ -11,12 +9,28 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.KeyPair;
 
-public class AndroidRepositoryManager implements RepositoryManager {
+public class DefaultRepositoryManager implements RepositoryManager {
 
-    private final Path mRepositoriesDir;
+    private RepositoriesFolder repositoriesFolder;
+    private RepositoryFactory repositoryFactory;
 
-    public AndroidRepositoryManager(Context ctx) {
-        this.mRepositoriesDir = ctx.getDataDir().toPath().resolve("repositories");
+    public DefaultRepositoryManager() {
+    }
+
+    public RepositoryFactory getRepositoryFactory() {
+        return repositoryFactory;
+    }
+
+    public void setRepositoryFactory(RepositoryFactory repositoryFactory) {
+        this.repositoryFactory = repositoryFactory;
+    }
+
+    public RepositoriesFolder getRepositoriesFolder() {
+        return repositoriesFolder;
+    }
+
+    public void setRepositoriesFolder(RepositoriesFolder repositoriesFolder) {
+        this.repositoriesFolder = repositoriesFolder;
     }
 
     private RepositoryFileContext createFileRepositoryContext(RepositoryContext src) {
@@ -38,8 +52,14 @@ public class AndroidRepositoryManager implements RepositoryManager {
         RepositoryContext ctx = new RepositoryContext();
         RepositoryAlias alias = RepositoryAlias.getAlias(kp);
         Path location = this.getLocationByAlias(alias);
+        RepositoryFactory factory = this.repositoryFactory;
+
+        if (factory == null) {
+            throw new RepositoryException("repository-factory is null");
+        }
 
         ctx.setKeyPair(kp);
+        ctx.setFactory(factory);
 
         ctx.setAlias(alias);
         ctx.setHolder(new MyHolder(ctx));
@@ -57,7 +77,8 @@ public class AndroidRepositoryManager implements RepositoryManager {
     }
 
     private Path getLocationByAlias(RepositoryAlias alias) {
-        return this.mRepositoriesDir.resolve(String.valueOf(alias));
+        Path folder = this.repositoriesFolder.folder();
+        return folder.resolve(String.valueOf(alias));
     }
 
     private static class MyHolder implements RepositoryHolder {
@@ -99,7 +120,7 @@ public class AndroidRepositoryManager implements RepositoryManager {
             }
 
             // create new context
-            ctx = DefaultRepositoryFactory.getInstance().create(ctx);
+            ctx = this.context.getFactory().create(ctx);
 
             // init repo
             RepositoryInitializer initializer = new RepositoryInitializer(ctx);
@@ -120,7 +141,8 @@ public class AndroidRepositoryManager implements RepositoryManager {
             ctx.setLayout(layout);
 
             // create new context
-            ctx = DefaultRepositoryFactory.getInstance().create(ctx);
+            RepositoryFactory factory = this.context.getFactory();
+            ctx = factory.create(ctx);
 
             // load repo
             RepositoryLoader loader = new RepositoryLoader(ctx);

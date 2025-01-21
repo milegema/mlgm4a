@@ -5,8 +5,15 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.github.milegema.mlgm4a.boot.Bootstrap;
+import com.github.milegema.mlgm4a.components.ComponentManager;
+import com.github.milegema.mlgm4a.contexts.ApplicationContext;
+import com.github.milegema.mlgm4a.data.entities.AccountEntity;
+import com.github.milegema.mlgm4a.data.entities.BaseEntity;
+import com.github.milegema.mlgm4a.data.ids.AccountID;
+import com.github.milegema.mlgm4a.data.ids.EntityID;
+import com.github.milegema.mlgm4a.data.ids.UserID;
 import com.github.milegema.mlgm4a.data.properties.PropertyTable;
-import com.github.milegema.mlgm4a.data.repositories.AndroidRepositoryManager;
 import com.github.milegema.mlgm4a.data.repositories.Repository;
 import com.github.milegema.mlgm4a.data.repositories.RepositoryHolder;
 import com.github.milegema.mlgm4a.data.repositories.RepositoryManager;
@@ -15,11 +22,12 @@ import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 import com.github.milegema.mlgm4a.data.repositories.objects.EncodedObject;
 import com.github.milegema.mlgm4a.data.repositories.objects.ObjectBuilder;
 import com.github.milegema.mlgm4a.data.repositories.objects.ObjectHolder;
-import com.github.milegema.mlgm4a.data.repositories.objects.ObjectMeta;
 import com.github.milegema.mlgm4a.data.repositories.objects.Objects;
 import com.github.milegema.mlgm4a.data.repositories.refs.Ref;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
 import com.github.milegema.mlgm4a.data.repositories.refs.Refs;
+import com.github.milegema.mlgm4a.data.repositories.tables.DB;
+import com.github.milegema.mlgm4a.data.repositories.tables.TableManager;
 import com.github.milegema.mlgm4a.logs.Logs;
 import com.github.milegema.mlgm4a.security.KeyPairAlias;
 import com.github.milegema.mlgm4a.security.KeyPairHolder;
@@ -32,6 +40,8 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -42,9 +52,12 @@ public class RepositoryManagerTest {
     @Test
     public void useRepositoryManager() throws IOException {
 
-        Context app_context = ApplicationProvider.getApplicationContext();
-        RepositoryManager repo_manager = new AndroidRepositoryManager(app_context);
-        KeyPairManager key_pair_manager = KeyPairManager.Agent.getKeyPairManager();
+        Context context = ApplicationProvider.getApplicationContext();
+        ApplicationContext ac = Bootstrap.boot(context);
+        ComponentManager com_man = ac.components();
+
+        RepositoryManager repo_manager = com_man.find(RepositoryManager.class);
+        KeyPairManager key_pair_manager = com_man.find(KeyPairManager.class);
 
         // prepare key-pair
         KeyPairHolder key_pair_holder = key_pair_manager.get(new KeyPairAlias("test"));
@@ -68,6 +81,7 @@ public class RepositoryManagerTest {
         this.try_refs(repo);
         this.try_object_create_and_fetch(repo);
         this.try_object_export_and_import(repo);
+        this.try_tables(repo);
     }
 
     private void try_refs(Repository repo) throws IOException {
@@ -114,5 +128,65 @@ public class RepositoryManagerTest {
         Assert.assertArrayEquals(body1.toByteArray(), body2.toByteArray());
 
         encoded.verify();
+    }
+
+    private void try_tables(Repository repo) {
+        TableManager tm = repo.tables();
+        DB db = tm.db();
+        List<EntityID> ids = new ArrayList<>();
+        List<BaseEntity> entities = new ArrayList<>();
+
+        // create
+        final int total = 10;
+        for (int i = 0; i < total; ++i) {
+            String name = "foo-" + i;
+            AccountEntity entity = new AccountEntity();
+            entity.setUsername(name);
+            entity.setDomain(name + ".bar.com");
+            entity = db.create(entity);
+            AccountID id = entity.getId();
+            ids.add(id);
+            Logs.info("account.id = " + id);
+        }
+
+        db.commit();
+        db.clearCache();
+
+        // update
+
+        for (EntityID id : ids) {
+            AccountEntity ent = db.find(id, AccountEntity.class);
+            ent.setOwner(new UserID(666));
+            db.update(id, ent);
+            // Logs.info("account.entity = " + ent);
+        }
+        db.commit();
+        db.clearCache();
+
+        // delete
+        db.delete(ids.get(0), AccountEntity.class);
+        db.commit();
+        db.clearCache();
+
+        // find
+        for (EntityID id : ids) {
+            try {
+                AccountEntity ent = db.find(id, AccountEntity.class);
+                Logs.info("account.entity = " + ent);
+                entities.add(ent);
+            } catch (Exception e) {
+                Logs.error(e.getMessage());
+            }
+        }
+
+        //query
+
+        DB.Query<AccountEntity> q = new DB.Query<>(AccountEntity.class);
+        q.offset = 2;
+        q.limit = 5;
+        db.query(q);
+
+
+        Logs.debug("done");
     }
 }

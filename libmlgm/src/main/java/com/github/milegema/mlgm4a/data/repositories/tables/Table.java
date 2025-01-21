@@ -6,4 +6,12 @@ public interface Table {
 
     Schema owner();
 
+    Field primaryKey();
+
+    IdentityGenerator getIdentityGenerator();
+
+    EntityAdapter getEntityAdapter();
+
+    Class<?> getEntityClass();
+
 }

@@ -7,13 +7,16 @@ public class SchemaContext {
 
     private final Schema facade;
     private final SchemaTablesCache tableCache;
+    private final TableEntityMapper mapper;
 
     private SchemaName name;
     private Table[] tables; // children
 
+
     public SchemaContext() {
         this.facade = new SchemaFacade(this);
         this.tableCache = new SchemaTablesCache(this);
+        this.mapper = new TableEntityMapper(this);
     }
 
     public SchemaContext(SchemaContext src) {
@@ -21,8 +24,13 @@ public class SchemaContext {
             this.name = src.name;
             this.tables = src.tables;
         }
+        this.mapper = new TableEntityMapper(this);
         this.facade = new SchemaFacade(this);
         this.tableCache = new SchemaTablesCache(this);
+    }
+
+    public TableEntityMapper getMapper() {
+        return mapper;
     }
 
     public SchemaName getName() {

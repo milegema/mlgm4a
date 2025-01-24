@@ -18,7 +18,10 @@ final class ApplicationProperties {
 
     public static PropertyTable get(PropertyTable dst) {
         Object inst = new ApplicationProperties();
+
         dst.put(Names.application_2_properties, inst + "");
+        dst.put(Names.config_default_remote_url, "https://milegema.bitwormhole.com/");
+
         return dst;
     }
 

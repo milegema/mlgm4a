@@ -22,22 +22,44 @@
         android:text="Email" />
 
     <EditText
+        android:id="@+id/edit_text_email_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textWebEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:text="a@b" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Remote URL" />
+
+    <EditText
+        android:id="@+id/edit_text_remote_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="xxxx"
+        android:hint="input remote repo URL"
+        android:inputType="textUri"
+        android:labelFor="@id/edit_text_remote_url"
+        android:text="https://milegema.bitwormhole.com/" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Verification Code" />
 
-
-    <EditText
+    <com.github.milegema.mlgm4a.ui.views.VerificationCodeInputView
+        android:id="@+id/input_verification_code"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="number" />
+        android:layout_height="wrap_content" />
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
     <Button
+        android:id="@+id/button_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Login" />

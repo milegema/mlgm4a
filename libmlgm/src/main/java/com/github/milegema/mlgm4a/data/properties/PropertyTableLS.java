@@ -1,6 +1,8 @@
 package com.github.milegema.mlgm4a.data.properties;
 
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class PropertyTableLS {
 
@@ -48,24 +50,87 @@ public final class PropertyTableLS {
 
     //////////// private
 
-    private static class Parser {
-        public PropertyTable parse(String src) {
+    private static class ParserResultBuilder {
+
+        private final Map<String, String> table;
+        private String propertyNamePrefix; // like 'foo.bar.'
+
+        public ParserResultBuilder() {
+            this.table = new HashMap<>();
+        }
+
+        public PropertyTable create() {
             PropertyTable dst = PropertyTable.Factory.create();
-            String[] rows = this.splitToRows(src);
-            for (String row : rows) {
-                this.parseRow(row, dst);
-            }
+            dst.importAll(this.table);
             return dst;
         }
 
-        private void parseRow(String row, PropertyTable dst) {
+        public void addKeyValue(String name, String value) {
+            if (name == null || value == null) {
+                return;
+            }
+            String prefix = this.propertyNamePrefix;
+            if (prefix == null) {
+                this.table.put(name, value);
+            } else {
+                this.table.put(prefix + name, value);
+            }
+        }
+
+        public void updateSegmentPrefix(String[] parts) {
+            StringBuilder b = new StringBuilder();
+            for (String part : parts) {
+                part = part.trim();
+                if (part.isEmpty()) {
+                    continue;
+                }
+                b.append(part).append('.');
+            }
+            this.propertyNamePrefix = b.toString();
+        }
+    }
+
+    private static class Parser {
+        public PropertyTable parse(String src) {
+            ParserResultBuilder builder = new ParserResultBuilder();
+            String[] rows = this.splitToRows(src);
+            for (String row : rows) {
+                this.parseRow(row, builder);
+            }
+            return builder.create();
+        }
+
+        private void parseRow(String row, ParserResultBuilder builder) {
+            row = row.trim();
+            if (row.startsWith("#")) {
+                return; // 注释,忽略
+            }
+            if (row.startsWith("[") && row.endsWith("]")) {
+                this.parseRowSegment(row, builder);
+                return;
+            }
+            this.parseRowKeyValue(row, builder);
+        }
+
+        private void parseRowSegment(String row, ParserResultBuilder builder) {
+            final char c2 = '\n';
+            row = row.replace('[', c2);
+            row = row.replace(']', c2);
+            row = row.replace('"', c2);
+            row = row.replace('\'', c2);
+            row = row.replace('.', c2);
+            String[] array = row.split(String.valueOf(c2));
+            builder.updateSegmentPrefix(array);
+        }
+
+        private void parseRowKeyValue(String row, ParserResultBuilder builder) {
             int i1 = row.indexOf('=');
             if (i1 < 0) {
                 return;
             }
             String name = row.substring(0, i1).trim();
             String value = row.substring(i1 + 1).trim();
-            dst.put(name, value);
+            builder.addKeyValue(name, value);
         }
 
         private String[] splitToRows(String src) {

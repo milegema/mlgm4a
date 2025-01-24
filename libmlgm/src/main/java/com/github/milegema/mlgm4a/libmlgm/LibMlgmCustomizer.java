@@ -38,6 +38,7 @@ public final class LibMlgmCustomizer implements Customizer {
         ConfigComRepos.config_all(configuration);
         ConfigComSecurity.config_all(configuration);
         ConfigComOthers.config_all(configuration);
+        ConfigComWeb.config_all(configuration);
 
     }
 

@@ -14,7 +14,17 @@ public class DeveloperActivity extends MilegemaAppActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_developer);
 
+        // app
+        setupButtonToStartActivity(R.id.button_app_settings, AppSettingsActivity.class);
+        setupButtonToStartActivity(R.id.button_login, LoginActivity.class);
+
+        // user
         setupButtonToStartActivity(R.id.button_unlock, UnlockActivity.class);
+        setupButtonToStartActivity(R.id.button_user_settings, UserSettingsActivity.class);
+        setupButtonToStartActivity(R.id.button_account_list, AccountListActivity.class);
+        setupButtonToStartActivity(R.id.button_account_detail, AccountDetailActivity.class);
+        setupButtonToStartActivity(R.id.button_domain_list, DomainListActivity.class);
+        setupButtonToStartActivity(R.id.button_domain_detail, DomainDetailActivity.class);
     }
 
     private void setupButtonToStartActivity(int res_id, Class<?> activity_class) {
@@ -23,5 +33,4 @@ public class DeveloperActivity extends MilegemaAppActivity {
             this.startActivity(i);
         });
     }
-
 }

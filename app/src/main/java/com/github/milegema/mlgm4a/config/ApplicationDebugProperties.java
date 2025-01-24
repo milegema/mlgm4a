@@ -18,7 +18,10 @@ final class ApplicationDebugProperties {
 
     public static PropertyTable get(PropertyTable dst) {
         Object inst = new ApplicationDebugProperties();
+
         dst.put(Names.application_2_properties, inst + "");
+        dst.put(Names.config_default_remote_url, "http://192.168.0.108:7957/");
+
         return dst;
     }
 

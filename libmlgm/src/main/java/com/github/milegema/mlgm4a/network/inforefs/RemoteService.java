@@ -1,24 +1,31 @@
 package com.github.milegema.mlgm4a.network.inforefs;
 
-import com.github.milegema.mlgm4a.network.web.WebClient;
+import java.net.URL;
 
-public class RemoteService {
+public final class RemoteService {
 
-    private RemoteURL location;
+    private RemoteContext context;
+    private URL url;
     private String service;
-    private String requestContentType;
-    private String responseContentType;
-    private WebClient client;
+
 
     public RemoteService() {
     }
 
-    public RemoteURL getLocation() {
-        return location;
+    public RemoteContext getContext() {
+        return context;
     }
 
-    public void setLocation(RemoteURL location) {
-        this.location = location;
+    public void setContext(RemoteContext context) {
+        this.context = context;
+    }
+
+    public URL getUrl() {
+        return url;
+    }
+
+    public void setUrl(URL url) {
+        this.url = url;
     }
 
     public String getService() {
@@ -29,27 +36,4 @@ public class RemoteService {
         this.service = service;
     }
 
-    public String getRequestContentType() {
-        return requestContentType;
-    }
-
-    public void setRequestContentType(String requestContentType) {
-        this.requestContentType = requestContentType;
-    }
-
-    public String getResponseContentType() {
-        return responseContentType;
-    }
-
-    public void setResponseContentType(String responseContentType) {
-        this.responseContentType = responseContentType;
-    }
-
-    public WebClient getClient() {
-        return client;
-    }
-
-    public void setClient(WebClient client) {
-        this.client = client;
-    }
 }

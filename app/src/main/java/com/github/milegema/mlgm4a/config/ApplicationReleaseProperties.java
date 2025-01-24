@@ -19,6 +19,7 @@ final class ApplicationReleaseProperties {
     public static PropertyTable get(PropertyTable dst) {
         Object inst = new ApplicationReleaseProperties();
         dst.put(Names.application_2_properties, inst + "");
+        dst.put(Names.config_default_remote_url, "https://milegema.bitwormhole.com/");
         return dst;
     }
 

@@ -50,6 +50,10 @@ public final class Names {
     public final static String compression_algorithm = "compression.algorithm";
 
 
+    // config
+    public final static String config_default_remote_url = "config.default-remote-url";
+
+
     // content-data
 
     public final static String content_type = "content.type";

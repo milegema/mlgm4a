@@ -20,6 +20,13 @@ public final class ContextHolder {
     public ContextHolder() {
     }
 
+
+    public static ContextHolder getInstance(Context ctx) {
+        ContextAgent agent = (ContextAgent) ctx.getApplicationContext();
+        return agent.getContextHolder();
+    }
+
+
     public Application getApp() {
         return app;
     }

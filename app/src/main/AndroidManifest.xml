@@ -30,7 +30,7 @@
         </activity>
 
         <activity
-            android:name=".AppSettingsActivity"
+            android:name=".ImeSettingsActivity"
             android:label="@string/mlgm_ime_settings">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,7 +38,16 @@
         </activity>
 
         <activity android:name=".DeveloperActivity" />
+
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".AppSettingsActivity" />
+
         <activity android:name=".UnlockActivity" />
+        <activity android:name=".UserSettingsActivity" />
+        <activity android:name=".AccountListActivity" />
+        <activity android:name=".AccountDetailActivity" />
+        <activity android:name=".DomainListActivity" />
+        <activity android:name=".DomainDetailActivity" />
 
         <service
             android:name=".ime.MlgmImeService"

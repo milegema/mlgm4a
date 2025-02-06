@@ -60,7 +60,7 @@ public class RepositoryManagerTest {
         KeyPairManager key_pair_manager = com_man.find(KeyPairManager.class);
 
         // prepare key-pair
-        KeyPairHolder key_pair_holder = key_pair_manager.get(new KeyPairAlias("test"));
+        KeyPairHolder key_pair_holder = key_pair_manager.get(KeyPairAlias.parse("test"));
         if (!key_pair_holder.exists()) {
             Logs.info("create new key-pair");
             key_pair_holder.create();

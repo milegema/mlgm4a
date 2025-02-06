@@ -21,6 +21,13 @@ public final class RemoteURL {
         return (url.startsWith("http://") || url.startsWith("https://"));
     }
 
+    public static boolean equal(RemoteURL r1, RemoteURL r2) {
+        if (r1 == null || r2 == null) {
+            return false;
+        }
+        return r1.equals(r2);
+    }
+
     @Override
     public boolean equals(@Nullable Object obj) {
         if (obj == null) {

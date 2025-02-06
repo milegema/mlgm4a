@@ -13,6 +13,10 @@ import com.github.milegema.mlgm4a.contexts.ac.AndroidContextAgent;
 import com.github.milegema.mlgm4a.data.properties.Names;
 import com.github.milegema.mlgm4a.data.properties.PropertyGetter;
 import com.github.milegema.mlgm4a.data.properties.PropertyTable;
+import com.github.milegema.mlgm4a.data.repositories.RepositoryManager;
+import com.github.milegema.mlgm4a.security.KeyPairManager;
+
+import java.security.KeyPair;
 
 final class ConfigComOthers {
 
@@ -45,7 +49,11 @@ final class ConfigComOthers {
 
             String url = getter.getString(Names.config_default_remote_url, "");
             ContextAgent ca = com_man.find(ContextAgent.class);
+            KeyPairManager kp_man = com_man.find(KeyPairManager.class);
+            RepositoryManager repo_man = com_man.find(RepositoryManager.class);
 
+            inst.setKeyPairManager(kp_man);
+            inst.setRepositoryManager(repo_man);
             inst.setContextAgent(ca);
             inst.setDefaultRemoteURL(url);
         });

@@ -37,6 +37,12 @@ public final class EmailAddress {
         return array;
     }
 
+    public static boolean equal(EmailAddress a1, EmailAddress a2) {
+        if (a1 == null || a2 == null) {
+            return false;
+        }
+        return a1.equals(a2);
+    }
 
     @Override
     public boolean equals(@Nullable Object obj) {

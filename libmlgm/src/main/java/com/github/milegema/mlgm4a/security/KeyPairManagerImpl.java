@@ -34,7 +34,7 @@ public class KeyPairManagerImpl implements KeyPairManager {
 
     @Override
     public KeyPairHolder getRoot() {
-        return this.get(new KeyPairAlias("root"));
+        return this.get(KeyPairAlias.root());
     }
 
     @Override
@@ -45,7 +45,7 @@ public class KeyPairManagerImpl implements KeyPairManager {
             Enumeration<String> src = store.aliases();
             while (src.hasMoreElements()) {
                 String al = src.nextElement();
-                dst.add(new KeyPairAlias(al));
+                dst.add(KeyPairAlias.parse(al));
             }
         } catch (CertificateException | KeyStoreException | NoSuchAlgorithmException |
                  IOException e) {
@@ -62,7 +62,7 @@ public class KeyPairManagerImpl implements KeyPairManager {
         private KeyFingerprint mFinger;
 
         public MyKeyHolder(KeyPairAlias alias) {
-            this.mAlias = new KeyPairAlias(alias);
+            this.mAlias = KeyPairAlias.forAlias(alias);
         }
 
         @Override

@@ -39,7 +39,7 @@ public class KeyPairSignatureBenchmarkTest {
 
         KeyPairManager kpm = KeyPairManager.Agent.getKeyPairManager();
         // kpm.getRoot() ;
-        KeyPairHolder holder = kpm.get(new KeyPairAlias("test"));
+        KeyPairHolder holder = kpm.get(KeyPairAlias.parse("test"));
         if (!holder.exists()) {
             holder.create();
         }

@@ -29,7 +29,7 @@ public final class AndroidTestComFactory {
 
         // init key-pair
         KeyPairManager kpm = createKeyPairManager(ctx);
-        KeyPairHolder key_pair_h = kpm.get(new KeyPairAlias("test"));
+        KeyPairHolder key_pair_h = kpm.get(KeyPairAlias.parse("test"));
         if (!key_pair_h.exists()) {
             key_pair_h.create();
         }

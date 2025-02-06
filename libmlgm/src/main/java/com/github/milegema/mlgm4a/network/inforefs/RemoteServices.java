@@ -4,6 +4,7 @@ public final class RemoteServices {
 
     public final static String EXAMPLE = "example";
     public final static String TRUST = "trust";
-    public final static String SIGN_UP_IN = "sign-up-in";
+    public final static String AUTH = "auth";
+    public final static String BIND = "bind";
 
 }

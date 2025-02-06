@@ -10,21 +10,18 @@ public final class ContextFactory {
 
         RootContext rc = new RootContext();
 
-        rc.setRemote(null);
+        rc.setDefaultLocation(null);
         rc.setScope(ContextScope.ROOT);
-        rc.setOwnerRepository(null);
+        rc.setRepository(null);
 
         return rc;
     }
 
     public static UserContext createUserContext(RootContext parent) {
         UserContext uc = new UserContext();
-
         uc.setScope(ContextScope.USER);
         uc.setParent(parent);
-        uc.setOwnerRepository(null);
-
+        uc.setRepository(null);
         return uc;
     }
-
 }

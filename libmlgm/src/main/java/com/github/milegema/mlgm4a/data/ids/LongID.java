@@ -15,6 +15,14 @@ public class LongID implements EntityID {
         return this.value;
     }
 
+    public static long numberOf(EntityID id) {
+        if (id instanceof LongID) {
+            LongID long_id = (LongID) id;
+            return long_id.number();
+        }
+        return 0;
+    }
+
     @Override
     public boolean equals(@Nullable Object other) {
         if (other == null) {

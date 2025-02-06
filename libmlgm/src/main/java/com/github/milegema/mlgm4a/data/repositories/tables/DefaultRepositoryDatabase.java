@@ -73,7 +73,7 @@ public class DefaultRepositoryDatabase implements DB {
         boolean useUUID;
 
 
-        long id;
+        EntityID id;
         UUID uuid;
         BaseEntity entity;
         UserID user;
@@ -91,11 +91,7 @@ public class DefaultRepositoryDatabase implements DB {
                 this.entity = (BaseEntity) any_entity;
             }
 
-            if (entity_id instanceof LongID) {
-                LongID long_id = (LongID) entity_id;
-                this.id = long_id.number();
-            }
-
+            this.id = entity_id;
             this.time = Time.now();
         }
 
@@ -123,8 +119,8 @@ public class DefaultRepositoryDatabase implements DB {
             if (this.useGroup && group != null) {
                 this.entity.setGroup(this.group);
             }
-            if (this.useID && id > 0) {
-                this.entity.setLongID(this.id);
+            if (this.useID && id != null) {
+                this.entity.setEntityID(this.id);
             }
             if (this.useUUID && uuid != null) {
                 this.entity.setUuid(this.uuid);
@@ -297,15 +293,15 @@ public class DefaultRepositoryDatabase implements DB {
         return filter;
     }
 
-    private static long prepareSorter_get_long_id_of(Object o) {
-        if (o == null) {
+    private static long prepareSorter_get_long_id_of(Object entity) {
+        if (entity == null) {
             return 0;
         }
-        if (o instanceof BaseEntity) {
-            BaseEntity be = (BaseEntity) o;
-            return be.getLongID();
+        if (entity instanceof BaseEntity) {
+            BaseEntity be = (BaseEntity) entity;
+            return LongID.numberOf(be.getEntityID());
         }
-        return o.hashCode();
+        return 0;
     }
 
     private <T> Comparator<T> prepareSorter(Query<T> q) {

@@ -4,7 +4,7 @@ import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 
 public class RootContext extends ContextBase {
 
-    private RemoteURL remote;
+    private RemoteURL defaultLocation;
 
     public RootContext() {
     }
@@ -14,11 +14,11 @@ public class RootContext extends ContextBase {
         return null; // no parent
     }
 
-    public RemoteURL getRemote() {
-        return remote;
+    public RemoteURL getDefaultLocation() {
+        return defaultLocation;
     }
 
-    public void setRemote(RemoteURL remote) {
-        this.remote = remote;
+    public void setDefaultLocation(RemoteURL defaultLocation) {
+        this.defaultLocation = defaultLocation;
     }
 }

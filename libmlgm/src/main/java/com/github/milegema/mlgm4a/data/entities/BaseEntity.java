@@ -1,12 +1,12 @@
 package com.github.milegema.mlgm4a.data.entities;
 
-import com.github.milegema.mlgm4a.data.ids.EntityWithLongID;
+import com.github.milegema.mlgm4a.data.ids.EntityWithID;
 import com.github.milegema.mlgm4a.data.ids.GroupID;
 import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.data.ids.UserID;
 import com.github.milegema.mlgm4a.utils.Time;
 
-public abstract class BaseEntity implements EntityWithLongID {
+public abstract class BaseEntity implements EntityWithID {
 
     private UUID uuid;
     private UserID owner;

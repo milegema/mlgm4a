@@ -1,6 +1,7 @@
 package com.github.milegema.mlgm4a.data.entities;
 
 import com.github.milegema.mlgm4a.data.ids.DomainID;
+import com.github.milegema.mlgm4a.data.ids.EntityID;
 import com.github.milegema.mlgm4a.data.ids.LongID;
 
 public class DomainEntity extends BaseEntity {
@@ -19,23 +20,15 @@ public class DomainEntity extends BaseEntity {
         this.id = id;
     }
 
+
     @Override
-    public void setLongID(long id) {
-        this.id = new DomainID(id);
+    public void setEntityID(EntityID id) {
+        long n = LongID.numberOf(id);
+        this.id = new DomainID(n);
     }
 
     @Override
-    public long getLongID() {
-        DomainID tmp = this.id;
-        if (tmp == null) {
-            return 0;
-        }
-        return tmp.number();
-    }
-
-    @Override
-    public LongID toLongID() {
+    public EntityID getEntityID() {
         return this.id;
     }
-
 }

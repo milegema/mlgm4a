@@ -3,11 +3,15 @@ package com.github.milegema.mlgm4a.data.properties;
 import android.util.NoSuchPropertyException;
 
 import com.github.milegema.mlgm4a.data.files.FileAccessLayerClass;
+import com.github.milegema.mlgm4a.data.ids.EmailAddress;
+import com.github.milegema.mlgm4a.data.ids.EntityID;
+import com.github.milegema.mlgm4a.data.ids.LongID;
 import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockType;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
 import com.github.milegema.mlgm4a.errors.Errors;
+import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 import com.github.milegema.mlgm4a.security.CipherMode;
 import com.github.milegema.mlgm4a.security.CipherPadding;
 import com.github.milegema.mlgm4a.utils.Base64;
@@ -100,6 +104,9 @@ public class PropertyGetter {
 
     public long getLong(String name, long def) {
         String str = innerGet(name);
+        if (str == null) {
+            return def;
+        }
         try {
             return Long.parseLong(str);
         } catch (Exception e) {
@@ -243,6 +250,37 @@ public class PropertyGetter {
         }
         return def;
     }
+
+
+    public EmailAddress getEmailAddress(String name, EmailAddress def) {
+        String str = innerGet(name);
+        if (str == null) {
+            return def;
+        }
+        return new EmailAddress(str);
+    }
+
+    public RemoteURL getRemoteURL(String name, RemoteURL def) {
+        String str = innerGet(name);
+        if (str == null) {
+            return def;
+        }
+        return new RemoteURL(str);
+    }
+
+    public EntityID getEntityID(String name, EntityID def) {
+        String str = innerGet(name);
+        if (str == null) {
+            return def;
+        }
+        try {
+            long n = Long.parseLong(str);
+            return new LongID(n);
+        } catch (Exception e) {
+            return def;
+        }
+    }
+
 
     public Time getTime(String name, Time def) {
         String str = innerGet(name);

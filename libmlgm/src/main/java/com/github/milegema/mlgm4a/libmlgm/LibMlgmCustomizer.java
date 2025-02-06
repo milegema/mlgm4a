@@ -33,13 +33,12 @@ public final class LibMlgmCustomizer implements Customizer {
     }
 
     private void customize_components(Configuration configuration) {
-
         ConfigComDB.config_all(configuration);
         ConfigComRepos.config_all(configuration);
         ConfigComSecurity.config_all(configuration);
         ConfigComOthers.config_all(configuration);
         ConfigComWeb.config_all(configuration);
-
+        ConfigComServices.config_all(configuration);
     }
 
     private void customize_attrs(Configuration configuration) {

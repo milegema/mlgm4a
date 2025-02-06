@@ -4,6 +4,7 @@ public enum WebFilterOrder {
 
     HEAD,
 
+    STATUS,
 
     LOCATION,
 
@@ -14,5 +15,6 @@ public enum WebFilterOrder {
     CORE,
 
     TAIL,
+
 
 }

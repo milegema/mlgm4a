@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.logs.AndroidLogger;
 import com.github.milegema.mlgm4a.logs.Logs;
 import com.github.milegema.mlgm4a.security.CipherMode;
@@ -22,7 +23,9 @@ import org.junit.runner.RunWith;
 
 import java.nio.charset.StandardCharsets;
 import java.security.KeyPair;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -39,7 +42,7 @@ public class KeyPairManagerTest {
 
         KeyPairManager kpm = KeyPairManager.Agent.getKeyPairManager();
         // kpm.getRoot() ;
-        KeyPairHolder holder = kpm.get(new KeyPairAlias("test"));
+        KeyPairHolder holder = kpm.get(KeyPairAlias.parse("test"));
         if (!holder.exists()) {
             holder.create();
         }
@@ -71,6 +74,38 @@ public class KeyPairManagerTest {
 
         Assert.assertArrayEquals(data1.toByteArray(), data3.toByteArray());
     }
+
+    @Test
+    public void useMultipleKeyPair() {
+
+        List<UUID> uuid_list = new ArrayList<>();
+        List<KeyPairAlias> alias_list = new ArrayList<>();
+        KeyPairManager kpm = KeyPairManager.Agent.getKeyPairManager();
+
+        uuid_list.add(new UUID("aaaa"));
+        uuid_list.add(new UUID("bbbb"));
+        uuid_list.add(new UUID("cccc"));
+        for (UUID uuid : uuid_list) {
+            alias_list.add(KeyPairAlias.forAlias(uuid));
+        }
+        alias_list.add(KeyPairAlias.root());
+
+        for (KeyPairAlias alias : alias_list) {
+            KeyPairHolder holder = kpm.get(alias);
+            if (!holder.exists()) {
+                holder.create();
+            }
+        }
+
+        KeyPairAlias[] alias_array = kpm.listAliases();
+        for (KeyPairAlias alias : alias_array) {
+            KeyPairHolder holder = kpm.get(alias);
+            KeyPair kp = holder.fetch();
+            KeyFingerprint finger = KeyFingerprint.compute(kp.getPublic());
+            Logs.debug("key-pair.alias: " + alias + ", fingerprint:" + finger);
+        }
+    }
+
 
     private ByteSlice prepareMockData() {
         String text = "" + this;

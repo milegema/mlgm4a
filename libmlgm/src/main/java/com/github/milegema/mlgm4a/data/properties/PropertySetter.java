@@ -2,6 +2,7 @@ package com.github.milegema.mlgm4a.data.properties;
 
 
 import com.github.milegema.mlgm4a.data.files.FileAccessLayerClass;
+import com.github.milegema.mlgm4a.data.ids.EntityID;
 import com.github.milegema.mlgm4a.data.ids.LongID;
 import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.data.repositories.blocks.BlockID;
@@ -155,6 +156,20 @@ public class PropertySetter {
         }
         long ms = value.milliseconds();
         innerSet(name, String.valueOf(ms));
+    }
+
+    public void putObject(String name, Object value) {
+        if (value == null) {
+            return;
+        }
+        innerSet(name, value.toString());
+    }
+
+    public void put(String name, EntityID value) {
+        if (value == null) {
+            return;
+        }
+        innerSet(name, value.toString());
     }
 
 }

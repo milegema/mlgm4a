@@ -1,11 +1,16 @@
 package com.github.milegema.mlgm4a.data.entities;
 
+import com.github.milegema.mlgm4a.data.ids.EmailAddress;
+import com.github.milegema.mlgm4a.data.ids.EntityID;
 import com.github.milegema.mlgm4a.data.ids.LongID;
 import com.github.milegema.mlgm4a.data.ids.UserID;
+import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 
 public class UserEntity extends BaseEntity {
 
     private UserID id;
+    private EmailAddress email;
+    private RemoteURL remote;
 
     public UserEntity() {
     }
@@ -18,23 +23,30 @@ public class UserEntity extends BaseEntity {
         this.id = id;
     }
 
+    public EmailAddress getEmail() {
+        return email;
+    }
 
-    @Override
-    public void setLongID(long id) {
-        this.id = new UserID(id);
+    public void setEmail(EmailAddress email) {
+        this.email = email;
+    }
+
+    public RemoteURL getRemote() {
+        return remote;
+    }
+
+    public void setRemote(RemoteURL remote) {
+        this.remote = remote;
     }
 
     @Override
-    public long getLongID() {
-        UserID tmp = this.id;
-        if (tmp == null) {
-            return 0;
-        }
-        return tmp.number();
+    public void setEntityID(EntityID id) {
+        long n = LongID.numberOf(id);
+        this.id = new UserID(n);
     }
 
     @Override
-    public LongID toLongID() {
+    public EntityID getEntityID() {
         return this.id;
     }
 }

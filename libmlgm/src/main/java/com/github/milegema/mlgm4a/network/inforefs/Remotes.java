@@ -13,6 +13,7 @@ public final class Remotes {
     private Remotes() {
     }
 
+
     public static RemoteContext getRemoteContext(Context ctx) {
 
         ContextHolder ch = ContextHolder.getInstance(ctx);
@@ -21,9 +22,9 @@ public final class Remotes {
 
         RootContext root_ctx = ch.getRoot();
         UserContext user_ctx = ch.getUser();
-        RemoteURL location = root_ctx.getRemote();
+        RemoteURL location = root_ctx.getDefaultLocation();
         if (user_ctx != null) {
-            RemoteURL url = user_ctx.getRemote();
+            RemoteURL url = user_ctx.getInitialLocation();
             if (url != null) {
                 location = url;
             }

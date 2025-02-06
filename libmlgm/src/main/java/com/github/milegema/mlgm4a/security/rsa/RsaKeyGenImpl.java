@@ -29,7 +29,7 @@ public class RsaKeyGenImpl implements PrivateKeyGenerator {
         public synchronized KeyPairAlias next() {
             final long now = System.currentTimeMillis();
             final int idx = ++this.indexer;
-            return new KeyPairAlias("rsa-" + now + '-' + idx);
+            return KeyPairAlias.parse("rsa-" + now + '-' + idx);
         }
     }
 

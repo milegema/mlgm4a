@@ -7,9 +7,9 @@ import java.io.InputStream;
 public interface Hash {
 
     String MD5 = "MD5";
-    String SHA1 = "SHA-1";
-    String SHA256 = "SHA-256";
-    String SHA512 = "SHA-512";
+    String SHA1 = "SHA1";
+    String SHA256 = "SHA256";
+    String SHA512 = "SHA512";
 
     String algorithm();
 

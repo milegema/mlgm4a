@@ -1,5 +1,6 @@
 package com.github.milegema.mlgm4a.security.rsa;
 
+import com.github.milegema.mlgm4a.data.ids.UUID;
 import com.github.milegema.mlgm4a.security.KeyPairAlias;
 import com.github.milegema.mlgm4a.security.PrivateKeyEncoded;
 import com.github.milegema.mlgm4a.utils.ByteSlice;
@@ -32,7 +33,7 @@ final class RsaKeyAliasCodec {
         }
         byte[] bin = src.getEncoded().toByteArray();
         String alias = new String(bin, StandardCharsets.UTF_8);
-        return new KeyPairAlias(alias);
+        return KeyPairAlias.forAlias(new UUID(alias));
     }
 
 }

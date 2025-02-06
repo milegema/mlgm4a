@@ -1,17 +1,22 @@
 package com.github.milegema.mlgm4a.contexts;
 
 import com.github.milegema.mlgm4a.data.ids.EmailAddress;
+import com.github.milegema.mlgm4a.data.ids.RoamingUserURN;
 import com.github.milegema.mlgm4a.data.ids.UserID;
 import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
+import com.github.milegema.mlgm4a.security.Token;
 
 public class UserContext extends ContextBase {
 
     private RootContext parent;
 
     private EmailAddress email;
-    private RemoteURL remote;
+    private RemoteURL initialLocation;
+    private RemoteURL currentLocation;
     private String displayName;
     private UserID userID; // the local-user-id
+    private RoamingUserURN roamingName;
+    private Token token;
 
     public UserContext() {
     }
@@ -48,12 +53,36 @@ public class UserContext extends ContextBase {
         this.email = email;
     }
 
-    public RemoteURL getRemote() {
-        return remote;
+    public RoamingUserURN getRoamingName() {
+        return roamingName;
     }
 
-    public void setRemote(RemoteURL remote) {
-        this.remote = remote;
+    public void setRoamingName(RoamingUserURN roamingName) {
+        this.roamingName = roamingName;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
+    public RemoteURL getInitialLocation() {
+        return initialLocation;
+    }
+
+    public void setInitialLocation(RemoteURL initialLocation) {
+        this.initialLocation = initialLocation;
+    }
+
+    public RemoteURL getCurrentLocation() {
+        return currentLocation;
+    }
+
+    public void setCurrentLocation(RemoteURL currentLocation) {
+        this.currentLocation = currentLocation;
     }
 
     @Override

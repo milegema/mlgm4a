@@ -4,27 +4,28 @@ import com.github.milegema.mlgm4a.components.ComponentHolderBuilder;
 import com.github.milegema.mlgm4a.components.ComponentProviderT;
 import com.github.milegema.mlgm4a.components.ComponentSetBuilder;
 import com.github.milegema.mlgm4a.configurations.Configuration;
+import com.github.milegema.mlgm4a.contexts.ContextAgent;
+import com.github.milegema.mlgm4a.data.databases.RootDBA;
+import com.github.milegema.mlgm4a.data.databases.RootDatabaseAgent;
+import com.github.milegema.mlgm4a.data.databases.UserDBA;
+import com.github.milegema.mlgm4a.data.databases.UserDatabaseAgent;
 import com.github.milegema.mlgm4a.data.entities.AccountEntity;
+import com.github.milegema.mlgm4a.data.entities.SceneEntity;
+import com.github.milegema.mlgm4a.data.entities.WordEntity;
 import com.github.milegema.mlgm4a.data.entities.DomainEntity;
 import com.github.milegema.mlgm4a.data.entities.UserEntity;
 import com.github.milegema.mlgm4a.data.entities.adapters.AccountEntityAdapter;
 import com.github.milegema.mlgm4a.data.entities.adapters.DomainEntityAdapter;
+import com.github.milegema.mlgm4a.data.entities.adapters.SceneEntityAdapter;
 import com.github.milegema.mlgm4a.data.entities.adapters.UserEntityAdapter;
+import com.github.milegema.mlgm4a.data.entities.adapters.WordEntityAdapter;
 import com.github.milegema.mlgm4a.data.repositories.tables.DefaultIdentityGenerator;
-import com.github.milegema.mlgm4a.data.repositories.tables.Field;
-import com.github.milegema.mlgm4a.data.repositories.tables.FieldBuilder;
 import com.github.milegema.mlgm4a.data.repositories.tables.FieldType;
 import com.github.milegema.mlgm4a.data.repositories.tables.Schema;
 import com.github.milegema.mlgm4a.data.repositories.tables.SchemaBuilder;
 import com.github.milegema.mlgm4a.data.repositories.tables.Table;
 import com.github.milegema.mlgm4a.data.repositories.tables.TableBuilder;
 import com.github.milegema.mlgm4a.data.repositories.tables.TableName;
-import com.github.milegema.mlgm4a.security.AlgorithmProvider;
-import com.github.milegema.mlgm4a.security.aes.AesProvider;
-import com.github.milegema.mlgm4a.security.hash.MD5Provider;
-import com.github.milegema.mlgm4a.security.hash.SHA1Provider;
-import com.github.milegema.mlgm4a.security.hash.SHA256Provider;
-import com.github.milegema.mlgm4a.security.rsa.RsaProvider;
 
 final class ConfigComDB {
 
@@ -39,6 +40,9 @@ final class ConfigComDB {
         config_table_accounts(csb, builder);
 
         config_schema(csb, builder);
+
+        config_root_db_agent(csb);
+        config_user_db_agent(csb);
     }
 
     private static class MySchemaBuilder {
@@ -48,13 +52,17 @@ final class ConfigComDB {
         Table table_users;
         Table table_domains;
         Table table_accounts;
+        Table table_scenes;
+        Table table_words;
 
         void create() {
             final SchemaBuilder schema_builder = new SchemaBuilder();
 
-            config_table_accounts(schema_builder);
-            config_table_domains(schema_builder);
             config_table_users(schema_builder);
+            config_table_domains(schema_builder);
+            config_table_accounts(schema_builder);
+            config_table_scenes(schema_builder);
+            config_table_words(schema_builder);
 
             schema_builder.setName("milegema");
             Schema schema1 = schema_builder.create();
@@ -63,6 +71,8 @@ final class ConfigComDB {
             this.table_accounts = schema1.getTable(new TableName("accounts"));
             this.table_domains = schema1.getTable(new TableName("domains"));
             this.table_users = schema1.getTable(new TableName("users"));
+            this.table_scenes = schema1.getTable(new TableName("scenes"));
+            this.table_words = schema1.getTable(new TableName("words"));
         }
 
         private static void create_base_fields(TableBuilder table_builder) {
@@ -87,12 +97,45 @@ final class ConfigComDB {
             create_base_fields(table_builder);
 
             // other fields
+            table_builder.addField("username", FieldType.STRING);
+            table_builder.addField("domain", FieldType.STRING);
+            table_builder.addField("label", FieldType.STRING).setNullable(true);
+            table_builder.addField("description", FieldType.STRING).setNullable(true);
+        }
+
+        private static void config_table_scenes(SchemaBuilder schema_builder) {
+            TableBuilder table_builder = schema_builder.addTable("scenes");
+            table_builder.setEntityInfo(SceneEntity.class, new SceneEntityAdapter());
+
+            // pk
+            table_builder.addPrimaryKey("id", FieldType.INT);
+            create_base_fields(table_builder);
+
+            // other fields
             table_builder.addField("name", FieldType.STRING);
             table_builder.addField("name_with_domain", FieldType.STRING).setUnique(true);
             table_builder.addField("label", FieldType.STRING).setNullable(true);
             table_builder.addField("description", FieldType.STRING).setNullable(true);
             table_builder.addField("icon", FieldType.URL).setNullable(true);
         }
+
+        private static void config_table_words(SchemaBuilder schema_builder) {
+
+            TableBuilder table_builder = schema_builder.addTable("words");
+            table_builder.setEntityInfo(WordEntity.class, new WordEntityAdapter());
+
+            // pk
+            table_builder.addPrimaryKey("id", FieldType.INT);
+            create_base_fields(table_builder);
+
+            // other fields
+            table_builder.addField("name", FieldType.STRING);
+            table_builder.addField("name_with_domain", FieldType.STRING).setUnique(true);
+            table_builder.addField("label", FieldType.STRING).setNullable(true);
+            table_builder.addField("description", FieldType.STRING).setNullable(true);
+            table_builder.addField("icon", FieldType.URL).setNullable(true);
+        }
+
 
         private static void config_table_domains(SchemaBuilder schema_builder) {
 
@@ -152,6 +195,28 @@ final class ConfigComDB {
         provider.setFactory(() -> schema_builder.table_accounts);
         ComponentHolderBuilder builder = csb.addComponentProvider(provider);
         builder.addClass(Table.class);
+    }
+
+    static void config_root_db_agent(ComponentSetBuilder csb) {
+        ComponentProviderT<RootDatabaseAgent> provider = new ComponentProviderT<>();
+        provider.setFactory(RootDatabaseAgent::new);
+        provider.setWirer((ac, holder, inst) -> {
+            ContextAgent ca = ac.components().find(ContextAgent.class);
+            inst.setCa(ca);
+        });
+        ComponentHolderBuilder builder = csb.addComponentProvider(provider);
+        builder.addAlias(RootDBA.class);
+    }
+
+    static void config_user_db_agent(ComponentSetBuilder csb) {
+        ComponentProviderT<UserDatabaseAgent> provider = new ComponentProviderT<>();
+        provider.setFactory(UserDatabaseAgent::new);
+        provider.setWirer((ac, holder, inst) -> {
+            ContextAgent ca = ac.components().find(ContextAgent.class);
+            inst.setCa(ca);
+        });
+        ComponentHolderBuilder builder = csb.addComponentProvider(provider);
+        builder.addAlias(UserDBA.class);
     }
 
 }

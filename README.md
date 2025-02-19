@@ -26,3 +26,9 @@ todo ...
 ## 安装
 
 todo ...
+
+## 版权信息
+
+Copyright 2025 BitWormhole Studio
+
+本项目采用 Apache 许可证开源.

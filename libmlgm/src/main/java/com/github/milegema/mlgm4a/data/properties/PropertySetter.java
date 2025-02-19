@@ -15,6 +15,8 @@ import com.github.milegema.mlgm4a.utils.Base64;
 import com.github.milegema.mlgm4a.utils.Hex;
 import com.github.milegema.mlgm4a.utils.Time;
 
+import java.net.URL;
+
 public class PropertySetter {
 
     private final PropertyTable properties;
@@ -166,6 +168,13 @@ public class PropertySetter {
     }
 
     public void put(String name, EntityID value) {
+        if (value == null) {
+            return;
+        }
+        innerSet(name, value.toString());
+    }
+
+    public void put(String name, URL value) {
         if (value == null) {
             return;
         }

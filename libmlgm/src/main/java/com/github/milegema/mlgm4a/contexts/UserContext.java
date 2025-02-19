@@ -6,17 +6,21 @@ import com.github.milegema.mlgm4a.data.ids.UserID;
 import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 import com.github.milegema.mlgm4a.security.Token;
 
+import java.net.URL;
+
 public class UserContext extends ContextBase {
 
     private RootContext parent;
+    private UnlockedContext unlockedContext; // 如果为 null,表示已被上锁
 
     private EmailAddress email;
     private RemoteURL initialLocation;
     private RemoteURL currentLocation;
+    private URL avatar;
     private String displayName;
     private UserID userID; // the local-user-id
     private RoamingUserURN roamingName;
-    private Token token;
+    private Token token; // 这是解锁前的令牌
 
     public UserContext() {
     }
@@ -27,6 +31,14 @@ public class UserContext extends ContextBase {
 
     public void setParent(RootContext parent) {
         this.parent = parent;
+    }
+
+    public UnlockedContext getUnlockedContext() {
+        return unlockedContext;
+    }
+
+    public void setUnlockedContext(UnlockedContext unlockedContext) {
+        this.unlockedContext = unlockedContext;
     }
 
     public UserID getUserID() {
@@ -43,6 +55,14 @@ public class UserContext extends ContextBase {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public URL getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(URL avatar) {
+        this.avatar = avatar;
     }
 
     public EmailAddress getEmail() {

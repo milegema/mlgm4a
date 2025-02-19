@@ -1,17 +1,20 @@
-package com.github.milegema.mlgm4a.services;
+package com.github.milegema.mlgm4a.classes.authx;
 
 import android.content.Context;
 
+import com.github.milegema.mlgm4a.classes.users.UserService;
 import com.github.milegema.mlgm4a.contexts.ContextAgent;
 import com.github.milegema.mlgm4a.contexts.ContextHolder;
 import com.github.milegema.mlgm4a.contexts.RootContext;
 import com.github.milegema.mlgm4a.contexts.UserContext;
 import com.github.milegema.mlgm4a.data.entities.UserEntity;
 import com.github.milegema.mlgm4a.data.ids.EmailAddress;
+import com.github.milegema.mlgm4a.data.ids.UserID;
+import com.github.milegema.mlgm4a.data.properties.PropertyTable;
 import com.github.milegema.mlgm4a.data.repositories.Repository;
 import com.github.milegema.mlgm4a.data.repositories.RepositoryHolder;
 import com.github.milegema.mlgm4a.data.repositories.RepositoryManager;
-import com.github.milegema.mlgm4a.data.repositories.tables.DB;
+import com.github.milegema.mlgm4a.data.databases.DB;
 import com.github.milegema.mlgm4a.network.api.AuthAPI;
 import com.github.milegema.mlgm4a.network.api.BindAPI;
 import com.github.milegema.mlgm4a.network.inforefs.RemoteContext;
@@ -31,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
     private ContextAgent contextAgent;
     private KeyPairManager keyPairManager;
     private RepositoryManager repositoryManager;
+    private UserService userService;
 
     public AuthServiceImpl() {
     }
@@ -52,6 +56,7 @@ public class AuthServiceImpl implements AuthService {
 
         Repository userRepo;
         UserEntity userEntity;
+        KeyPair userKeyPair;
     }
 
     private interface StepFunction {
@@ -65,6 +70,7 @@ public class AuthServiceImpl implements AuthService {
         MyAuthContext auth_ctx = new MyAuthContext();
         Action action = params.action;
 
+        auth_ctx.context = ctx;
         auth_ctx.contextHolder = this.contextAgent.getContextHolder();
         auth_ctx.remoteContext = Remotes.getRemoteContext(ctx);
         auth_ctx.params = params;
@@ -77,6 +83,7 @@ public class AuthServiceImpl implements AuthService {
             steps.add(this::doPrepareUserRepo);
             steps.add(this::doCompleteUserContext);
             steps.add(this::doInvokeBind);
+            steps.add(this::doUpdateUserSignedAt);
         }
         steps.add(this::doMakeResult);
 
@@ -109,29 +116,31 @@ public class AuthServiceImpl implements AuthService {
     }
 
     private void doLoadOrCreateUserInfo(MyAuthContext ac) {
-        Repository repo = ac.rootContext.getRepository();
-        DB db = repo.tables().db();
 
         // want
+        UserEntity have = null;
         UserEntity want = new UserEntity();
         want.setEmail(ac.params.user);
         want.setRemote(ac.params.url);
 
-        // try load have
-        DB.Query<UserEntity> q = new DB.Query<>(UserEntity.class);
-        db.query(q);
-        List<UserEntity> all = q.results;
-        for (UserEntity have : all) {
-            if (same(want, have)) {
-                ac.userEntity = have;
-                return;
+        // find
+        Context ctx = ac.context;
+        List<UserEntity> all_user = this.userService.list(ctx, null);
+        for (UserEntity item : all_user) {
+            if (same(want, item)) {
+                have = item;
+                break;
             }
         }
 
-        // create new
-        want = db.create(want);
-        db.commit();
-        ac.userEntity = want;
+        // create | update
+        if (have == null) {
+            // create new
+            have = this.userService.insert(ctx, want);
+        }
+
+        // hold
+        ac.userEntity = have;
     }
 
 
@@ -142,6 +151,16 @@ public class AuthServiceImpl implements AuthService {
         boolean b1 = EmailAddress.equal(u1.getEmail(), u2.getEmail());
         boolean b2 = RemoteURL.equal(u1.getRemote(), u2.getRemote());
         return b1 && b2;
+    }
+
+    private void doUpdateUserSignedAt(MyAuthContext ac) {
+        Context ctx = ac.context;
+        UserID id = ac.userEntity.getId();
+        final long now = System.currentTimeMillis();
+        UserEntity ent = this.userService.update(ctx, id, (uid, item) -> {
+            item.setSignedAt(now);
+        });
+        ac.userEntity = ent;
     }
 
 
@@ -171,16 +190,39 @@ public class AuthServiceImpl implements AuthService {
             repo_holder.create();
         }
 
+        ac.userKeyPair = kp;
         ac.userRepo = repo_holder.open();
     }
 
-    private void doCompleteUserContext(MyAuthContext auth_ctx) {
+    private void doCompleteUserContext(MyAuthContext ac) {
+
+        UserContext uc = ac.userContext;
+        Repository repo = ac.userRepo;
+        KeyPair key_pair = ac.userKeyPair;
+        UserEntity user_info = ac.userEntity;
+        RemoteURL location = ac.remoteContext.getLocation();
+
+        uc.setRepository(repo);
+        uc.setContextKeyPair(key_pair);
+        uc.setContextPrivateKey(key_pair.getPrivate());
+        uc.setContextPublicKey(key_pair.getPublic());
+        uc.setUserID(user_info.getId());
+        uc.setDisplayName(user_info.getDisplayName());
+        uc.setAvatar(user_info.getAvatar());
+        uc.setEmail(user_info.getEmail());
+        uc.setInitialLocation(location);
+        uc.setCurrentLocation(location);
     }
 
     private void doInvokeBind(MyAuthContext auth_ctx) throws IOException {
 
         BindAPI api = new BindAPI(auth_ctx.remoteContext);
         BindAPI.Request req = new BindAPI.Request();
+
+        req.keyPair = auth_ctx.userKeyPair;
+        req.token = auth_ctx.userContext.getToken();
+        req.properties = PropertyTable.Factory.create();
+
         api.invoke(req);
     }
 
@@ -217,6 +259,14 @@ public class AuthServiceImpl implements AuthService {
 
     public void setKeyPairManager(KeyPairManager keyPairManager) {
         this.keyPairManager = keyPairManager;
+    }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     public ContextAgent getContextAgent() {

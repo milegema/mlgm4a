@@ -1,5 +1,7 @@
 package com.github.milegema.mlgm4a.data.repositories.tables;
 
+import com.github.milegema.mlgm4a.data.databases.DB;
+import com.github.milegema.mlgm4a.data.databases.DatabaseException;
 import com.github.milegema.mlgm4a.data.entities.BaseEntity;
 import com.github.milegema.mlgm4a.data.ids.EntityID;
 import com.github.milegema.mlgm4a.data.ids.GroupID;
@@ -189,6 +191,11 @@ public class DefaultRepositoryDatabase implements DB {
         return ec;
     }
 
+
+    @Override
+    public void transaction(TransactionHandler h) throws DatabaseException {
+        throw new DatabaseException("no impl");
+    }
 
     @Override
     public void clearCache() {

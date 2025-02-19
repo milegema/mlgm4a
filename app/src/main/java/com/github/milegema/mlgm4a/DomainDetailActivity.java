@@ -11,6 +11,6 @@ public class DomainDetailActivity extends MilegemaUserActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_example);
+        setContentView(R.layout.layout_domain_detail);
     }
 }

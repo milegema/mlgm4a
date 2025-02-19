@@ -1,10 +1,10 @@
 package com.github.milegema.mlgm4a.contexts;
 
-public class PasscodeContext extends ContextBase {
+public class WordContext extends ContextBase {
 
     private SceneContext parent;
 
-    public PasscodeContext() {
+    public WordContext() {
     }
 
     public SceneContext getParent() {

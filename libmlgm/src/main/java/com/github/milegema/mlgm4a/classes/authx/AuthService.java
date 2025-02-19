@@ -1,4 +1,4 @@
-package com.github.milegema.mlgm4a.services;
+package com.github.milegema.mlgm4a.classes.authx;
 
 import android.content.Context;
 
@@ -7,6 +7,7 @@ import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 import com.github.milegema.mlgm4a.network.web.AuthScheme;
 import com.github.milegema.mlgm4a.network.web.WebMethod;
 import com.github.milegema.mlgm4a.network.web.headers.HeaderWWWAuthenticate;
+import com.github.milegema.mlgm4a.classes.services.LocalService;
 
 import java.io.IOException;
 import java.util.List;

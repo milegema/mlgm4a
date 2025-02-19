@@ -12,6 +12,8 @@ import com.github.milegema.mlgm4a.data.repositories.tables.EntityContext;
 import com.github.milegema.mlgm4a.data.repositories.tables.PropertyNamePrefix;
 import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 
+import java.net.URL;
+
 public class UserEntityAdapter extends BaseEntityAdapter {
 
     @Override
@@ -32,6 +34,10 @@ public class UserEntityAdapter extends BaseEntityAdapter {
         dst.putObject(prefix.fullName("id"), src.getId());
         dst.putObject(prefix.fullName("email"), src.getEmail());
         dst.putObject(prefix.fullName("remote"), src.getRemote());
+
+        dst.put(prefix.fullName("avatar"), src.getAvatar());
+        dst.put(prefix.fullName("display-name"), src.getDisplayName());
+        dst.put(prefix.fullName("signed_at"), src.getSignedAt());
     }
 
     private static void convertP2E(PropertyNamePrefix prefix, PropertyGetter src, UserEntity dst) {
@@ -39,9 +45,15 @@ public class UserEntityAdapter extends BaseEntityAdapter {
         EntityID id = src.getEntityID(prefix.fullName("id"), null);
         EmailAddress email = src.getEmailAddress(prefix.fullName("email"), null);
         RemoteURL remote = src.getRemoteURL(prefix.fullName("remote"), null);
+        URL avatar = src.getURL(prefix.fullName("avatar"), null);
+        String display_name = src.getString(prefix.fullName("display-name"), null);
+        long signed_at = src.getLong(prefix.fullName("signed_at"), 0);
 
         dst.setEntityID(id);
         dst.setRemote(remote);
         dst.setEmail(email);
+        dst.setAvatar(avatar);
+        dst.setDisplayName(display_name);
+        dst.setSignedAt(signed_at);
     }
 }

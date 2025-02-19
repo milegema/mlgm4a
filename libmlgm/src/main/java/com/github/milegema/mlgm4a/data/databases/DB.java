@@ -1,4 +1,4 @@
-package com.github.milegema.mlgm4a.data.repositories.tables;
+package com.github.milegema.mlgm4a.data.databases;
 
 import com.github.milegema.mlgm4a.data.ids.EntityID;
 
@@ -29,6 +29,12 @@ public interface DB {
     interface QueryFilter<E> {
         boolean accept(E e);
     }
+
+    interface TransactionHandler {
+        void onTransaction(DB db) throws DatabaseException;
+    }
+
+    void transaction(TransactionHandler h) throws DatabaseException;
 
     void clearCache();
 

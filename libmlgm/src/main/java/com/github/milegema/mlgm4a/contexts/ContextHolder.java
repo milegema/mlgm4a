@@ -15,7 +15,7 @@ public final class ContextHolder {
     private DomainContext domain;
     private AccountContext account;
     private SceneContext scene;
-    private PasscodeContext passcode;
+    private WordContext passcode;
 
     public ContextHolder() {
     }
@@ -91,11 +91,11 @@ public final class ContextHolder {
         this.scene = scene;
     }
 
-    public PasscodeContext getPasscode() {
+    public WordContext getPasscode() {
         return passcode;
     }
 
-    public void setPasscode(PasscodeContext passcode) {
+    public void setPasscode(WordContext passcode) {
         this.passcode = passcode;
     }
 }

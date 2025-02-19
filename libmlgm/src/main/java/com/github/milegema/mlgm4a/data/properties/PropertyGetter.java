@@ -18,6 +18,9 @@ import com.github.milegema.mlgm4a.utils.Base64;
 import com.github.milegema.mlgm4a.utils.Hex;
 import com.github.milegema.mlgm4a.utils.Time;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 
 public class PropertyGetter {
 
@@ -266,6 +269,21 @@ public class PropertyGetter {
             return def;
         }
         return new RemoteURL(str);
+    }
+
+    public URL getURL(String name, URL def) {
+        String str = innerGet(name);
+        if (str == null) {
+            return def;
+        }
+        if (str.isEmpty()) {
+            return def;
+        }
+        try {
+            return new URL(str);
+        } catch (MalformedURLException e) {
+            return def;
+        }
     }
 
     public EntityID getEntityID(String name, EntityID def) {

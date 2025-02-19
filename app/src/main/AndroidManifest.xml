@@ -43,11 +43,13 @@
         <activity android:name=".AppSettingsActivity" />
 
         <activity android:name=".UnlockActivity" />
+        <activity android:name=".SetLockGraphActivity" />
         <activity android:name=".UserSettingsActivity" />
         <activity android:name=".AccountListActivity" />
         <activity android:name=".AccountDetailActivity" />
         <activity android:name=".DomainListActivity" />
         <activity android:name=".DomainDetailActivity" />
+        <activity android:name=".DomainAddActivity" />
 
         <service
             android:name=".ime.MlgmImeService"

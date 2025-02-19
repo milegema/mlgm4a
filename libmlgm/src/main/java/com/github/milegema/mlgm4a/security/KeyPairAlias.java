@@ -15,6 +15,10 @@ public final class KeyPairAlias extends Alias {
         return new KeyPairAlias("root");
     }
 
+    public static KeyPairAlias anonymous() {
+        return new KeyPairAlias("anonymous");
+    }
+
     public static KeyPairAlias parse(String str) {
         if ("root".equalsIgnoreCase(str)) {
             return root();

@@ -1,8 +1,12 @@
 package com.github.milegema.mlgm4a.data.entities;
 
 import com.github.milegema.mlgm4a.data.ids.AccountID;
+import com.github.milegema.mlgm4a.data.ids.DomainID;
 import com.github.milegema.mlgm4a.data.ids.EntityID;
 import com.github.milegema.mlgm4a.data.ids.LongID;
+import com.github.milegema.mlgm4a.data.ids.SceneID;
+import com.github.milegema.mlgm4a.data.ids.UserID;
+import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
 
 public class AccountEntity extends BaseEntity {
 
@@ -11,6 +15,12 @@ public class AccountEntity extends BaseEntity {
     private String username;
     private String label;
     private String description;
+
+
+    private RefName block;
+
+    private UserID ownerUser;
+    private DomainID ownerDomain;
 
 
     public AccountEntity() {
@@ -22,6 +32,30 @@ public class AccountEntity extends BaseEntity {
 
     public void setId(AccountID id) {
         this.id = id;
+    }
+
+    public RefName getBlock() {
+        return block;
+    }
+
+    public void setBlock(RefName block) {
+        this.block = block;
+    }
+
+    public UserID getOwnerUser() {
+        return ownerUser;
+    }
+
+    public void setOwnerUser(UserID ownerUser) {
+        this.ownerUser = ownerUser;
+    }
+
+    public DomainID getOwnerDomain() {
+        return ownerDomain;
+    }
+
+    public void setOwnerDomain(DomainID ownerDomain) {
+        this.ownerDomain = ownerDomain;
     }
 
     public String getDomain() {

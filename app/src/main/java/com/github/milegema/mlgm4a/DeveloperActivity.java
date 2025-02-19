@@ -20,6 +20,7 @@ public class DeveloperActivity extends MilegemaAppActivity {
 
         // user
         setupButtonToStartActivity(R.id.button_unlock, UnlockActivity.class);
+        setupButtonToStartActivity(R.id.button_set_lock_graph, SetLockGraphActivity.class);
         setupButtonToStartActivity(R.id.button_user_settings, UserSettingsActivity.class);
         setupButtonToStartActivity(R.id.button_account_list, AccountListActivity.class);
         setupButtonToStartActivity(R.id.button_account_detail, AccountDetailActivity.class);

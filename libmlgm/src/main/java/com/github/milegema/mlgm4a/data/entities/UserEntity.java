@@ -6,11 +6,18 @@ import com.github.milegema.mlgm4a.data.ids.LongID;
 import com.github.milegema.mlgm4a.data.ids.UserID;
 import com.github.milegema.mlgm4a.network.inforefs.RemoteURL;
 
+import java.net.URL;
+
 public class UserEntity extends BaseEntity {
 
     private UserID id;
     private EmailAddress email;
     private RemoteURL remote;
+    private URL avatar;
+    private String displayName;
+
+    /**  登录时间, 通过这个字段来判断当前的用户(最后登陆者) */
+    private long signedAt;
 
     public UserEntity() {
     }
@@ -48,5 +55,29 @@ public class UserEntity extends BaseEntity {
     @Override
     public EntityID getEntityID() {
         return this.id;
+    }
+
+    public URL getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(URL avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public long getSignedAt() {
+        return signedAt;
+    }
+
+    public void setSignedAt(long signedAt) {
+        this.signedAt = signedAt;
     }
 }

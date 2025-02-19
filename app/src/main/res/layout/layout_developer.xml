@@ -60,6 +60,12 @@
         android:layout_margin="5dp"
         android:text="unlock" />
 
+    <Button
+        android:id="@+id/button_set_lock_graph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:text="Set lock graph" />
 
     <Button
         android:id="@+id/button_domain_detail"

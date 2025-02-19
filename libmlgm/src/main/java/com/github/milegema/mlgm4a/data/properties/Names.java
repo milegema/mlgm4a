@@ -72,9 +72,20 @@ public final class Names {
     public final static String secret_key_format = "secret-key.format";
     public final static String secret_key_size = "secret-key.size";
 
+
+    // public-key
+    public final static String public_key_algorithm = "public-key.algorithm";
+    public final static String public_key_format = "public-key.format";
+    public final static String public_key_fingerprint = "public-key.fingerprint";
+
+
     // signature
 
     public final static String signature_algorithm = "signature.algorithm";
+
+    // token
+
+    public final static String token = "token"; // aka. JWT
 
     // {repo}/config
 

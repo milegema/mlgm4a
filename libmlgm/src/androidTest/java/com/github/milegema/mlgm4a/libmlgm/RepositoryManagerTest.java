@@ -26,7 +26,7 @@ import com.github.milegema.mlgm4a.data.repositories.objects.Objects;
 import com.github.milegema.mlgm4a.data.repositories.refs.Ref;
 import com.github.milegema.mlgm4a.data.repositories.refs.RefName;
 import com.github.milegema.mlgm4a.data.repositories.refs.Refs;
-import com.github.milegema.mlgm4a.data.repositories.tables.DB;
+import com.github.milegema.mlgm4a.data.databases.DB;
 import com.github.milegema.mlgm4a.data.repositories.tables.TableManager;
 import com.github.milegema.mlgm4a.logs.Logs;
 import com.github.milegema.mlgm4a.security.KeyPairAlias;

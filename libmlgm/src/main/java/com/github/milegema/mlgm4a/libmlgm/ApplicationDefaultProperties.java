@@ -19,6 +19,7 @@ final class ApplicationDefaultProperties {
     public static PropertyTable get(PropertyTable dst) {
         Object inst = new ApplicationDefaultProperties();
         dst.put(Names.application_1_properties, inst + "");
+        dst.put(Names.config_default_remote_url, "http://localhost:5678/");
         return dst;
     }
 

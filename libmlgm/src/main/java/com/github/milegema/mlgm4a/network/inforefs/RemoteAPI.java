@@ -21,9 +21,9 @@ public abstract class RemoteAPI<REQ, RESP> implements API<REQ, RESP> {
         this.service = rs;
     }
 
-    protected abstract void encode(REQ src, WebRequest dst);
+    protected abstract void encode(REQ src, WebRequest dst) throws IOException;
 
-    protected abstract void decode(WebResponse src, RESP dst);
+    protected abstract void decode(WebResponse src, RESP dst) throws IOException;
 
     protected final void execute(REQ req, RESP resp) throws IOException {
         WebClient client = this.service.getContext().getClient();

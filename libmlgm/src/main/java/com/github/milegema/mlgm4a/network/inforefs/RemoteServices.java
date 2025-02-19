@@ -6,5 +6,7 @@ public final class RemoteServices {
     public final static String TRUST = "trust";
     public final static String AUTH = "auth";
     public final static String BIND = "bind";
+    public final static String LOCK = "lock";
+    public final static String UNLOCK = "unlock";
 
 }

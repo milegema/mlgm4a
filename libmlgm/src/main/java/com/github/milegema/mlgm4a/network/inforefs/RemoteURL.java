@@ -3,6 +3,10 @@ package com.github.milegema.mlgm4a.network.inforefs;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
+
 public final class RemoteURL {
 
     private final String url;
@@ -26,6 +30,18 @@ public final class RemoteURL {
             return false;
         }
         return r1.equals(r2);
+    }
+
+    public URL toURL() {
+        try {
+            return new URL(this.url);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public URI toURI() {
+        return URI.create(this.url);
     }
 
     @Override

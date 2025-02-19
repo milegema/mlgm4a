@@ -2,6 +2,7 @@ package com.github.milegema.mlgm4a.libmlgm;
 
 import com.github.milegema.mlgm4a.boot.AutoRootContextLoader;
 import com.github.milegema.mlgm4a.boot.AutoUserContextLoader;
+import com.github.milegema.mlgm4a.classes.users.UserService;
 import com.github.milegema.mlgm4a.components.ComLifecycle;
 import com.github.milegema.mlgm4a.components.ComponentHolderBuilder;
 import com.github.milegema.mlgm4a.components.ComponentManager;
@@ -67,15 +68,17 @@ final class ConfigComOthers {
         provider.setWirer((ac, holder, inst) -> {
 
             ComponentManager com_man = ac.components();
-            //   PropertyTable pt = ac.properties();
-            //   PropertyGetter getter = new PropertyGetter(pt);
-
             ContextAgent ca = com_man.find(ContextAgent.class);
+            UserService us = com_man.find(UserService.class);
+            RepositoryManager repo_man = com_man.find(RepositoryManager.class);
+            KeyPairManager kp_man = com_man.find(KeyPairManager.class);
 
             inst.setContextAgent(ca);
+            inst.setUserService(us);
+            inst.setKeyPairManager(kp_man);
+            inst.setRepositoryManager(repo_man);
         });
         ComponentHolderBuilder builder = csb.addComponentProvider(provider);
         builder.addClass(ComLifecycle.class);
     }
-
 }

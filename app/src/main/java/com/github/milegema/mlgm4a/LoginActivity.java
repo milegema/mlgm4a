@@ -21,8 +21,8 @@ import com.github.milegema.mlgm4a.network.web.AuthScheme;
 import com.github.milegema.mlgm4a.network.web.WebMethod;
 import com.github.milegema.mlgm4a.network.web.headers.HeaderWWWAuthenticate;
 import com.github.milegema.mlgm4a.security.Token;
-import com.github.milegema.mlgm4a.services.LocalServices;
-import com.github.milegema.mlgm4a.services.AuthService;
+import com.github.milegema.mlgm4a.classes.services.LocalServices;
+import com.github.milegema.mlgm4a.classes.authx.AuthService;
 import com.github.milegema.mlgm4a.tasks.Promise;
 import com.github.milegema.mlgm4a.tasks.Result;
 import com.github.milegema.mlgm4a.ui.views.VerificationCodeInputView;
@@ -152,7 +152,7 @@ public class LoginActivity extends MilegemaAppActivity {
             Logs.info("OK");
             return res;
         }).Catch((res) -> {
-            int flags = Errors.FLAG_ALERT;
+            int flags = Errors.FLAG_ALERT | Errors.FLAG_LOG;
             Errors.handle(this, res.getError(), flags);
             return res;
         }).start();
